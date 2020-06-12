@@ -1,0 +1,316 @@
+/*font variables*/
+$primary-font: 'Roboto', sans-serif;
+$header-font: 'Oswald', sans-serif;
+$cursive-font: 'Over the Rainbow', cursive;
+/*color variables*/
+$primary-color: #edc159;
+$secondary-color: #99c1bb;
+$tertiary-color: #6c978f;
+$primary-color-dark: #200810;
+$secondary-color-dark: #a57239;
+/*font size variables*/
+$x-large-font: 40px;
+$large-font: 30px;
+$medium-font: 20px;
+$small-font: 13px;
+$x-small-font: 11px;
+
+/*********************
+styles shared across pages
+*********************/
+/* main body format */
+body {
+	font-size: $medium-font;
+	font-family: $primary-font;
+	overflow-x: hidden;
+	color: $primary-color-dark;
+}
+
+/* header styles */
+.jumbotron {
+	background-color: $primary-color;
+	a:hover {
+		text-decoration: none;
+		color: $secondary-color-dark;
+	}
+}
+
+h1,
+h2 {
+	font-family: $header-font;
+	font-size: $large-font;
+	a {
+		color: $primary-color-dark;
+	}	
+		@media (min-width: 992px) {
+			font-size: $x-large-font;
+		}
+}
+
+h3 {
+	font-size: $medium-font;
+	color: $tertiary-color;
+}
+
+/* page filter */
+.fa-filter {
+	font-size: 24px;
+}
+
+/* search area and sub header */
+.subHeading {
+	font-family: $cursive-font;
+	font-size: $small-font;
+
+	@media (min-width: 992px) {
+		font-size: $medium-font;
+	}
+}
+
+/*place menu index in front of absolute positioned flyout menu*/
+#menuBtn {
+	z-index: 1;
+}
+
+#navbarMenu,
+#filterMenu {
+/*absolue positioning on small screens to place menu over top of all other content*/
+	position: absolute;
+	top: -5px;
+	z-index: 1;
+	height: 100vh;
+	width: 75vw;
+	background: #fff;
+
+	ul {
+	/*position the list so it doesn't bump against very top left*/
+		margin-top: 75px;
+		padding-left: 15px;
+
+		@media (min-width: 992px) {
+			padding-left: 40px;
+		}
+	}
+
+	@media (min-width: 992px) {
+	/*move position back to inherit so it falls into correct position*/
+		position: inherit;
+		height: auto;
+		background-color: $primary-color!important;
+		font-size: $small-font;
+		ul {
+		/*remove extra spacing added on smaller screens*/
+			margin-top: 0;
+			padding-left: 0;
+		}
+	}
+}
+
+#filterMenu {
+	right: 0;
+	padding: 40px 20px 0;
+
+	@media (min-width: 992px) {
+	padding: 85px 50px 0;
+	}
+}
+
+#menuBtn,
+#filterBtn {
+	z-index: 2;
+	:hover {
+		cursor: pointer;
+	}
+}
+
+#navList {
+	padding-left: 50px;
+}
+
+ul li,
+.filterLabel {
+	font-family: $header-font;
+	font-size: $large-font;
+}
+
+/*submit button for modals*/
+.modalSubmit,
+.filterSubmit {
+	background-color: $tertiary-color;
+	color: #fff;
+}
+
+/*icons*/
+.fa-hamburger {
+	color: $secondary-color-dark;
+}
+
+.fa-beer {
+	color: $primary-color;
+}
+/*********************
+end styles shared across pages
+*********************/
+
+/*********************
+index page styles
+*********************/
+#searcharea {
+	border: 1px solid #fff;
+	border-radius: 15px;
+		input:active,
+		input:focus {
+			outline: none;
+		}
+		input {
+			width: 70%;
+			font-size: $small-font;
+		}
+		@media (min-width: 992px) {
+			width: 85%;
+		}
+}
+
+/* menu styles */
+.mapArea {
+	margin-top: 125px;
+	:hover {
+		cursor: grab;
+	}
+}
+
+/* fixed content styles */
+.mapArea {
+	z-index: -1;
+}
+
+/* business content styles */
+#businessListContent {
+	margin: 0;
+	margin-top: 50%;
+		@media (min-width: 992px) {
+			margin-top: 0;
+		}
+}
+
+.distance {
+	font-size: $x-small-font;
+}
+
+.specialsDetails,
+.seeMore {
+	font-size: $small-font;
+		a {
+			color: $primary-color-dark;
+			text-decoration: underline;
+		}
+
+		a:hover {
+			color: $tertiary-color;
+		}
+}
+/*********************
+index page styles
+*********************/
+
+/***********************
+add happy hour page styles
+***********************/
+label {
+	font-size: $small-font;
+}
+
+#happyHourAdd {
+	background-color: $primary-color;
+	color: $primary-color-dark;
+	border: none;
+}
+#happyHourAdd:hover {
+	background-color: $secondary-color-dark;
+	color: #fff;
+}
+
+#submitHappyHour {
+	background-color: $tertiary-color;
+	color: #fff;
+}
+#submitHappyHour:hover {
+		background-color: $secondary-color;
+		color: $primary-color-dark;
+}
+/***********************
+end add happy hour page styles
+***********************/
+
+
+/***********************
+business info page styles
+***********************/
+#businessContent {
+	margin: 0;
+
+	h2,
+	.fa-phone,
+	.fa-directions {
+		color: $tertiary-color;
+	}
+
+	h3 {
+		color: $primary-color-dark;
+		font-size: $medium-font;
+	}
+
+	.address,
+	.voteTotal {
+		font-size: $small-font;
+	}
+}
+
+/* carousel formatting */
+#foodSlide {
+	img {
+		height: 300px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.carousel-item {
+		@media (min-width: 992px) {
+			width: 33%;
+			display: inline-block;
+		}
+	}
+}
+
+.fa-star,
+.fa-star-half-alt {
+	color: $primary-color;
+}
+
+.specials-border {
+	border-bottom: 1px solid $primary-color-dark;
+	width: 90%;
+}
+
+.specials-time {
+	font-size: $large-font;
+	font-family: $header-font;
+}
+
+h4 {
+	font-family: $header-font;
+	font-size: $medium-font;
+}
+
+.thumbUp,
+.thumbDown {
+	color: #d4d4d4;
+	cursor: pointer;
+
+	:hover {
+		color: $tertiary-color;
+	}
+}
+/***********************
+end of business info page styles
+***********************/
