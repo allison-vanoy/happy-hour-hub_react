@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Jumbotron, Row, Col, Navbar, Nav, NavItem, NavLink, Button, NavbarToggler, Collapse } from 'reactstrap';
+import Filter from './FilterComponent';
+import Searchbar from './SearchbarComponent';
 
 class Header extends Component {
 	constructor(props) {
@@ -32,6 +34,7 @@ class Header extends Component {
 							<p>find or add happy hour specials near you</p>
 						</Col>
 
+						{/* menu options */}
 						<Navbar light>
 							<NavbarToggler id="menuBtn" onClick={this.toggleNav} />
 							<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
@@ -51,6 +54,11 @@ class Header extends Component {
 								</Nav>
 							</Collapse>
 						</Navbar>
+
+						<Filter />
+
+						<Searchbar />
+
 					</Row>
 				</Jumbotron>
 			</React.Fragment>
