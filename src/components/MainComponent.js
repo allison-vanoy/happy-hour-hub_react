@@ -22,7 +22,7 @@ class Main extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Container fluid id="mainContainer" class="pb-0">
+				<Container fluid id="mainContainer" className="p-0">
 					<Map />
 					<BusinessList businesses={this.state.businesses} happyhours={this.state.happyhours} />
 				</Container>

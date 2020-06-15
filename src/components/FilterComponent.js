@@ -22,13 +22,13 @@ class Filter extends Component {
 		return (
 			<React.Fragment>
 				{/* filter icon */}
-				<Button onClick={this.toggleFilter} id="filterBtn" class="col-2 text-center mt-2 ml-0 d-lg-none">
-					<i class="fa fa-filter" />
-				</Button>
+				<a type="button" onClick={this.toggleFilter} id="filterBtn" className="col-2 text-center mt-2 ml-0 d-lg-none">
+					<i className="fa fa-filter" />
+				</a>
 
 				<Collapse isOpen={this.state.isFilterOpen}>
 					<Form id="filterMenu">
-						<Label class="filterLabel">Day of the Week</Label>
+						<Label className="filterLabel">Day of the Week</Label>
 						<FormGroup check>
 							<Label check>
 								<Input type="checkbox" />
