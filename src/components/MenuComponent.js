@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarToggler, Collapse, Nav, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Menu extends Component {
 	constructor(props) {
@@ -25,16 +26,16 @@ class Menu extends Component {
 				<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
 					<Nav navbar id="navList" className="mt-lg-0 mx-auto">
 						<NavItem>
-							<NavLink to="/home">Home</NavLink>
+							<Link to="/">Home</Link>
 						</NavItem>
 						<NavItem>
-							<NavLink to="/add-new-happy-hour">Add New Happy Hour</NavLink>
+							<Link to="/add-new-happy-hour">Add New Happy Hour</Link>
 						</NavItem>
 						<NavItem>
-							<NavLink to="/sign-in">Sign-In</NavLink>
+							<Link to="/sign-in">Sign-In</Link>
 						</NavItem>
 						<NavItem>
-							<NavLink to="/create-account">Create Account</NavLink>
+							<Link to="/create-account">Create Account</Link>
 						</NavItem>
 					</Nav>
 				</Collapse>

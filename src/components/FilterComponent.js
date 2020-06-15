@@ -28,50 +28,127 @@ class Filter extends Component {
 
 				<Collapse isOpen={this.state.isFilterOpen}>
 					<Form id="filterMenu">
-						<Label className="filterLabel">Day of the Week</Label>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Monday
-							</Label>
+					{/* Day of the Week filter section */}
+						<FormGroup row>
+							<Col xs={12}>
+								<Label className="filterLabel">Day of the Week</Label>
+							</Col>
+							<Col xs={4}>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Monday
+									</Label>
+								</FormGroup>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Tuesday
+									</Label>
+								</FormGroup>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Wednesday
+									</Label>
+								</FormGroup>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Thursday
+									</Label>
+								</FormGroup>
+							</Col>
+							<Col xs={4}>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Friday
+									</Label>
+								</FormGroup>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Saturday
+									</Label>
+								</FormGroup>		
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Sunday
+									</Label>
+								</FormGroup>
+							</Col>
 						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Tuesday
-							</Label>
+
+					{/* Type of Happy Hour filter section */}
+						<FormGroup row>
+							<Col xs={12}>
+								<Label className="filterLabel">Type of Happy hour</Label>
+							</Col>
+							<Col xs={4}>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Food
+									</Label>
+								</FormGroup>
+							</Col>
+							<Col xs={4}>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										Drink
+									</Label>
+								</FormGroup>
+							</Col>
+						</FormGroup>		
+
+					{/* Ratings filter section */}
+						<FormGroup row>
+							<Col xs={12}>
+								<Label className="filterLabel">Ratings</Label>
+							</Col>
+							<Col>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										> 1 star
+									</Label>
+								</FormGroup>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										> 2 star
+									</Label>
+								</FormGroup>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										> 3 star
+									</Label>
+								</FormGroup>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										> 4 star
+									</Label>
+								</FormGroup>
+								<FormGroup check>
+									<Label check>
+										<Input type="checkbox" /> {' '}
+										> 5 star
+									</Label>
+								</FormGroup>
+							</Col>
 						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Wednesday
-							</Label>
-						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Thursday
-							</Label>
-						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Friday
-							</Label>
-						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Saturday
-							</Label>
-						</FormGroup>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" />
-								Sunday
-							</Label>
-						</FormGroup>
+
+						{/* Apply Filters button */}
+						<FormGroup row className="mb-4 mt-4">
+							<Button id="applyFilters" type="submit" className="btn btn-lg mx0auto btn-block filterSubmit">Apply Filters</Button>	
+						</FormGroup>	
 					</Form>
+
 				</Collapse>
 			</React.Fragment>
 		);
