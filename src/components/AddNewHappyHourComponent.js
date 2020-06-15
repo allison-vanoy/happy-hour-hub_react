@@ -5,124 +5,29 @@ import {
 	Container, Col, 
 	Card, CardHeader, CardBody, Button, Row
 } from 'reactstrap';
+import RenderDetailsForm from './AddMoreComponent';
 
 class AddNewHappyHour extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			addMoreNum: 1
+			addMoreNum: [
+				'happyhour-0',
+			]
 		}
 
 		this.handleAddMore = this.handleAddMore.bind(this);
 	}
 
 	handleAddMore() {
-		this.setState({
-			addMoreNum: this.state.addMoreNum + 1
-		})
+		let newNum = `happyhour-${this.state.addMoreNum.length}`;
+        this.setState(prevState => ({ 
+			addMoreNum: prevState.addMoreNum.concat([newNum]) 
+		}));
 	}
 
 	render() {
-		const RenderDetailsForm = () => {
-			return (
-				<CardBody className="happyHourContent border mt-3">
-					<Button className="close happyHourDelete">&times;</Button>
-	
-					<FormGroup>
-						<Label>Item</Label>
-						<Input type="text" placeholder="i.e. traditional wings" />
-					</FormGroup>
-	
-					<FormGroup row>
-						<Col>
-							<Label>Price/Discount</Label>
-							<Input type="text" placeholder="i.e. 1/2 price" />
-						</Col>
-						<Col>
-							<Label>Food/Drink</Label>
-							<Input type="select">
-								<option selected>select...</option>
-								<option>Food</option>
-								<option>Drink</option>
-							</Input>
-						</Col>
-					</FormGroup>
-	
-					<FormGroup row>
-						<Col xs={12}>
-							<Label>Day(s) Available</Label>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Monday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Tuesday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Wednesday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Thursday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Friday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Saturday
-								</Label>
-							</FormGroup>
-						</Col>
-						<Col xs={4}>
-							<FormGroup check>
-								<Label check>
-									<Input type="checkbox" /> {' '}
-									Sunday
-								</Label>
-							</FormGroup>
-						</Col>
-					</FormGroup>		
-				</CardBody>
-			);
-		}
-
-		{/* start array with one card to fill out then push more 
-		to the array as state counter increases on "Add More" clicks */}
-		const DetailsArray = [
-			<RenderDetailsForm />
-		]
-
-		while (DetailsArray.length < this.state.addMoreNum) {
-			DetailsArray.push(<RenderDetailsForm />);
-		}
 
 		return (
 			<React.Fragment>
@@ -153,7 +58,7 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-							{DetailsArray}
+							{this.state.addMoreNum.map(happyhourCount => <RenderDetailsForm key={happyhourCount} />)} 
 						</Card>
 
 						<Row className="mt-3">
