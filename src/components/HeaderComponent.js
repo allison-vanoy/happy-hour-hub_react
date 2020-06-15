@@ -22,46 +22,45 @@ class Header extends Component {
 
 	render() {
 		return (
-			<React.Fragment>
-				<Jumbotron fluid className="sticky-top">
-					<Row>
-						{/* main title */}
-						<Col>
-							<h1><a href="#">Happy Hour Hub</a></h1>
-						</Col>
-						{/* sub title */}
-						<Col>
-							<p>find or add happy hour specials near you</p>
-						</Col>
+			<Jumbotron fluid className="pb-0 pt-1 mb-0 sticky-top">
+				<Row>
+					{/* main title */}
+					<Col xs={8} lg={6} class="text-center mt-1">
+						<h1><a href="#">Happy Hour Hub</a></h1>
+					</Col>
 
-						{/* menu options */}
-						<Navbar light>
-							<NavbarToggler id="menuBtn" onClick={this.toggleNav} />
-							<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
-								<Nav navbar id="navList">
-									<NavItem>
-										<NavLink to="/home">Home</NavLink>
-									</NavItem>
-									<NavItem>
-										<NavLink to="/add-new-happy-hour">Add New Happy Hour</NavLink>
-									</NavItem>
-									<NavItem>
-										<NavLink to="/sign-in">Sign-In</NavLink>
-									</NavItem>
-									<NavItem>
-										<NavLink to="/create-account">Create Account</NavLink>
-									</NavItem>
-								</Nav>
-							</Collapse>
-						</Navbar>
+					{/* sub title */}
+					<Col lg={6} class="d-none d-lg-block text-left mt-4">
+						<p>find or add happy hour specials near you</p>
+					</Col>
 
-						<Filter />
+					{/* menu options */}
+					<Navbar light>
+						<NavbarToggler id="menuBtn" onClick={this.toggleNav} />
+						<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
+							<Nav navbar id="navList" class="mt-4 mt-lg-0 mx-auto">
+								<NavItem>
+									<NavLink to="/home">Home</NavLink>
+								</NavItem>
+								<NavItem>
+									<NavLink to="/add-new-happy-hour">Add New Happy Hour</NavLink>
+								</NavItem>
+								<NavItem>
+									<NavLink to="/sign-in">Sign-In</NavLink>
+								</NavItem>
+								<NavItem>
+									<NavLink to="/create-account">Create Account</NavLink>
+								</NavItem>
+							</Nav>
+						</Collapse>
+					</Navbar>
 
-						<Searchbar />
+					<Filter />
 
-					</Row>
-				</Jumbotron>
-			</React.Fragment>
+					<Searchbar />
+
+				</Row>
+			</Jumbotron>
 		);
 	}
 

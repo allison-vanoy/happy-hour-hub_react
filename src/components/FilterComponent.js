@@ -1,55 +1,81 @@
-import React from 'react';
-import { Form, Row, Col, Label, FormGroup, Input } from 'reactstrap';
+import React, { Component } from 'react';
+import { Form, Row, Col, Label, FormGroup, Input, Button, Collapse } from 'reactstrap';
 
-function Filter() {
+class Filter extends Component {
+	constructor(props) {
+		super(props);
 
-	return (
-		<React.Fragment>
-			{/* filter icon */}
-			<a id="filterBtn">
-				<i class="fa fa-filter" />
-			</a>
+		this.state = {
+			isFilterOpen: false
+		}
 
-			<Form>
-				<Row>
-					<Col>
-						<Label></Label>
-						<FormGroup>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="monday" value="monday" />
-								<Label htmlFor="monday">Monday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="tuesday" value="tuesday" />
-								<Label htmlFor="tuesday">Tuesday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="wednesday" value="wednesday" />
-								<Label htmlFor="wednesday">Wednesday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="thursday" value="thursday" />
-								<Label htmlFor="thursday">Thursday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="friday" value="friday" />
-								<Label htmlFor="friday">Friday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="saturday" value="saturday" />
-								<Label htmlFor="saturday">Saturday</Label>
-							</div>
-							<div className="form-check-inline">
-								<Input type="checkbox" id="sunday" value="sunday" />
-								<Label htmlFor="sunday">Sunday</Label>
-							</div>
+		this.toggleFilter = this.toggleFilter.bind(this);
+	}
+
+	toggleFilter() {
+		this.setState({
+			isFilterOpen: !this.state.isFilterOpen
+		});
+	}
+	
+	render() {
+		return (
+			<React.Fragment>
+				{/* filter icon */}
+				<Button onClick={this.toggleFilter} id="filterBtn" class="col-2 text-center mt-2 ml-0 d-lg-none">
+					<i class="fa fa-filter" />
+				</Button>
+
+				<Collapse isOpen={this.state.isFilterOpen}>
+					<Form id="filterMenu">
+						<Label class="filterLabel">Day of the Week</Label>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Monday
+							</Label>
 						</FormGroup>
-					</Col>
-				</Row>
-			</Form>
-		</React.Fragment>
-	);
-
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Tuesday
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Wednesday
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Thursday
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Friday
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Saturday
+							</Label>
+						</FormGroup>
+						<FormGroup check>
+							<Label check>
+								<Input type="checkbox" />
+								Sunday
+							</Label>
+						</FormGroup>
+					</Form>
+				</Collapse>
+			</React.Fragment>
+		);
+	}
 }
 
 export default Filter;

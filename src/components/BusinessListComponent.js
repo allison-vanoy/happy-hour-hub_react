@@ -9,11 +9,11 @@ class BusinessList extends Component {
 				<React.Fragment>
 					{happyhourFilter.map(happyhour => { 
 						return (
-							<div key={happyhour.id}>
-								<p>{happyhour.name}</p>
-								<p>$</p>
-								<p>{happyhour.deal}</p>
-							</div>
+							<Row key={happyhour.id} class="specialsDetails">
+								<i class="col-2 fas fa-hamburger pr-0 mt-1" />
+								<p class="col-6 pl-0 mb-1">{happyhour.name}</p>
+								<p class="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
+							</Row>
 						)
 					})}
 				</React.Fragment>
@@ -22,9 +22,10 @@ class BusinessList extends Component {
 
 		const businessDetails = this.props.businesses.map(business => {
 			return (
-				<div key={business.id} id="businessContainer">
-					<Row>
-						<h3>{business.name}</h3>
+				<div key={business.id} id="businessContainer border bg-white p-2">
+					<Row class="pb-0">
+						<h3 class="col-9">{business.name}</h3>
+						<p class="col text-right distance">0.2m away</p>
 					</Row>
 					{happyhourDetails(business.id)}
 				</div>
@@ -32,9 +33,11 @@ class BusinessList extends Component {
 		});
 
 		return (
-			<React.Fragment>
-				{businessDetails}
-			</React.Fragment>
+			<Row class="businesListContainer">
+				<Col lg={4}>
+					{businessDetails}
+				</Col>
+			</Row>
 		);
 	}
 

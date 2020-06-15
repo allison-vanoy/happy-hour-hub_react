@@ -4,6 +4,7 @@ import Map from './MapComponent';
 import BusinessList from './BusinessListComponent';
 import { BUSINESSES } from '../shared/businesses';
 import { HAPPYHOURS } from '../shared/happyhours';
+import { Container } from 'reactstrap';
 
 //Main will handle any state
 class Main extends Component {
@@ -21,8 +22,10 @@ class Main extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Map />
-				<BusinessList businesses={this.state.businesses} happyhours={this.state.happyhours} />
+				<Container fluid id="mainContainer" class="pb-0">
+					<Map />
+					<BusinessList businesses={this.state.businesses} happyhours={this.state.happyhours} />
+				</Container>
 			</React.Fragment>
 		);
 	}
