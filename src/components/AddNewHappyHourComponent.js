@@ -12,23 +12,26 @@ class AddNewHappyHour extends Component {
 		super(props);
 
 		this.state = {
-			addMoreNum: [
-				'happyhour-0',
-			]
+			happyhourArray: [0],
 		}
 
 		this.handleAddMore = this.handleAddMore.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	handleAddMore() {
-		let newNum = `happyhour-${this.state.addMoreNum.length}`;
-        this.setState(prevState => ({ 
-			addMoreNum: prevState.addMoreNum.concat([newNum]) 
-		}));
+		let nextNumInArr = [(this.state.happyhourArray.length-1) + 1];
+		this.setState({	happyhourArray: [...this.state.happyhourArray, ...nextNumInArr] });
+	}
+
+	handleDelete(indexVal) {
+		let index = this.state.happyhourArray.indexOf(indexVal);
+		let newHappyhourArray = [...this.state.happyhourArray]
+		newHappyhourArray.splice(index, 1);
+        this.setState({ happyhourArray: newHappyhourArray });
 	}
 
 	render() {
-
 		return (
 			<React.Fragment>
 				<h2 className="mt-4 ml-3">Add New Happy Hour</h2>
@@ -58,10 +61,10 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-							{this.state.addMoreNum.map(happyhourCount => <RenderDetailsForm key={happyhourCount} />)} 
+							{this.state.happyhourArray.map(happyhourCount => <RenderDetailsForm key={happyhourCount} indexVal={happyhourCount} handleDelete={this.handleDelete} />)} 
 						</Card>
 
-						<Row className="mt-3">
+						<Row>
 							<Button id="happyHourAdd" className="btn btn-secondary mx-auto" onClick={this.handleAddMore}>Add More</Button>
 						</Row>
 						<Row className="mt-5 mx-3">
