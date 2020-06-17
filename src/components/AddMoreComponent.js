@@ -13,8 +13,11 @@ class RenderDetailsForm extends Component {
 
 				<FormGroup>
 					<Label>Item</Label>
-					<Input type="text"  
-					placeholder="i.e. traditional wings" />
+					<Input type="text" name={this.props.itemDesc}
+						index={this.props.indexVal}
+						onChange={this.props.handleHappyhourChange}  
+						placeholder="i.e. traditional wings" 
+					/>
 				</FormGroup>
 
 				<FormGroup row>
@@ -38,69 +41,22 @@ class RenderDetailsForm extends Component {
 					<Col xs={12}>
 						<Label>Day(s) Available</Label>
 					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Monday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Tuesday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Wednesday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Thursday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Friday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Saturday
-							</Label>
-						</FormGroup>
-					</Col>
-					<Col xs={4}>
-						<FormGroup check>
-							<Label check>
-								<Input type="checkbox" 
-								/> {' '}
-								Sunday
-							</Label>
-						</FormGroup>
-					</Col>
+					{this.props.dayOfWeek.map(day => {
+						return (
+							<Col xs={4}>
+								<FormGroup key={day.id} check>
+									<Label check>
+										<Input type="checkbox" name="dayOfWeek"
+											index={day.id} 
+											checked={day.isChecked} 
+											onChange={this.props.handleDayChange}
+										/> {' '}
+										{day.name}
+									</Label>
+								</FormGroup>
+							</Col>
+						)
+					})}
 				</FormGroup>		
 			</CardBody>
 		);

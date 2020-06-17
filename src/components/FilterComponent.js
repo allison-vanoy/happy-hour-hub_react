@@ -84,11 +84,9 @@ class Filter extends Component {
 				},
 			]
 		}
-
-		this.toggleFilter = this.toggleFilter.bind(this);
 	}
 
-	toggleFilter() {
+	toggleFilter = () => {
 		this.setState({
 			isFilterOpen: !this.state.isFilterOpen
 		});

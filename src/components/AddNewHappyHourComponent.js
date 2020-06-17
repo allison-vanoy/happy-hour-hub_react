@@ -17,40 +17,107 @@ class AddNewHappyHour extends Component {
 				itemDesc: '',
 				discount: '',
 				type: '',
-				dayAvailability: ''
+				dayOfWeek: [
+					{
+						id: 0,
+						name: 'Monday',
+						isChecked: false
+					},
+					{
+						id: 1,
+						name: 'Tuesday',
+						isChecked: false
+					},
+					{
+						id: 2,
+						name: 'Wednesday',
+						isChecked: false
+					},
+					{
+						id: 3,
+						name: 'Thursday',
+						isChecked: false
+					},
+					{
+						id: 4,
+						name: 'Friday',
+						isChecked: false
+					},
+					{
+						id: 5,
+						name: 'Saturday',
+						isChecked: false
+					},
+					{
+						id: 6,
+						name: 'Sunday',
+						isChecked: false
+					},
+				]
 			}],
 			businessName: '',
 			address: '',
 			startTime: '',
 			endTime: '',
 		}
-
-		this.handleAddMore = this.handleAddMore.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
-		this.handleBusinessChange = this.handleBusinessChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleAddMore() {
+	handleAddMore = () => {
 		let nextNumInArr = (this.state.happyhourArray.length-1) + 1;
 		const newArr = [{
 			id: nextNumInArr,
 			itemDesc: '',
 			discount: '',
 			type: '',
-			dayAvailability: ''
+			dayOfWeek: [
+				{
+					id: 0,
+					name: 'Monday',
+					isChecked: false
+				},
+				{
+					id: 1,
+					name: 'Tuesday',
+					isChecked: false
+				},
+				{
+					id: 2,
+					name: 'Wednesday',
+					isChecked: false
+				},
+				{
+					id: 3,
+					name: 'Thursday',
+					isChecked: false
+				},
+				{
+					id: 4,
+					name: 'Friday',
+					isChecked: false
+				},
+				{
+					id: 5,
+					name: 'Saturday',
+					isChecked: false
+				},
+				{
+					id: 6,
+					name: 'Sunday',
+					isChecked: false
+				},
+			]
 		}];
 		this.setState({	happyhourArray: [...this.state.happyhourArray, ...newArr] });
 	}
 
-	handleDelete(indexVal) {
+	handleDelete = (indexVal) => {
 		let index = this.state.happyhourArray.indexOf(indexVal);
 		let newHappyhourArray = [...this.state.happyhourArray]
 		newHappyhourArray.splice(index, 1);
         this.setState({ happyhourArray: newHappyhourArray });
 	}
 
-	handleBusinessChange(event) {
+	handleBusinessChange = (event) => {
 		const target = event.target;
 		const name = target.name;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -60,7 +127,39 @@ class AddNewHappyHour extends Component {
 		})
 	}
 
-	handleSubmit(event) {
+	handleHappyhourChange = (event, groupIndex) => {
+		console.log(`event: ${event}, card group index: ${groupIndex}`)
+
+		const checkIndex = event.target.getAttribute('index');
+		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
+		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
+		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
+		console.log(newArr);
+
+		// this.setState({
+		// 	happyhourArray: {
+		// 		dayOfWeek: newArr,
+		// 	}
+		// });
+	}
+	
+	handleDayChange = (event, groupIndex) => {
+		console.log(`event: ${event}, card group index: ${groupIndex}`)
+
+		const checkIndex = event.target.getAttribute('index');
+		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
+		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
+		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
+		console.log(newArr);
+
+		// this.setState({
+		// 	happyhourArray: {
+		// 		dayOfWeek: newArr,
+		// 	}
+		// });
+	}
+	
+	handleSubmit = (event) => {
 		alert(JSON.stringify(this.state))
 		event.preventDefault();
 	}
@@ -118,8 +217,10 @@ class AddNewHappyHour extends Component {
 									itemDesc={happyhour.itemDesc}
 									discount={happyhour.discount}
 									type={happyhour.type}
-									dayAvailability={happyhour.dayAvailability}
+									dayOfWeek={happyhour.dayOfWeek}
 									handleDelete={this.handleDelete} 
+									handleHappyhourChange={(event) => this.handleHappyhourChange(event, happyhour.id)}
+									handleDayChange={(event) => this.handleDayChange(event, happyhour.id)}
 								/>
 							)} 
 						</Card>
