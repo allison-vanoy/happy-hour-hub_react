@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class BusinessList extends Component {
 	render() {
@@ -27,7 +28,14 @@ class BusinessList extends Component {
 						<h3 className="col-9">{business.name}</h3>
 						<p className="col text-right distance">0.2m away</p>
 					</Row>
+
 					{happyhourDetails(business.id)}
+
+                    <div class="row text-center seeMore">
+                        <div class="col">
+                            <Link to={`/business/${business.id}`}>see more...</Link>
+                        </div>
+                    </div>
 				</div>
 			);
 		});

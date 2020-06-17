@@ -13,7 +13,7 @@ class RenderDetailsForm extends Component {
 
 				<FormGroup>
 					<Label>Item</Label>
-					<Input type="text" name={this.props.itemDesc}
+					<Input type="text" name="itemDesc"
 						index={this.props.indexVal}
 						onChange={this.props.handleHappyhourChange}  
 						placeholder="i.e. traditional wings" 
@@ -23,16 +23,20 @@ class RenderDetailsForm extends Component {
 				<FormGroup row>
 					<Col>
 						<Label>Price/Discount</Label>
-						<Input type="text"  
+						<Input type="text" name="discount"
+							index={this.props.indexVal}
+							onChange={this.props.handleHappyhourChange}    
 							placeholder="i.e. 1/2 price" />
 					</Col>
 					<Col>
 						<Label>Food/Drink</Label>
-						<Input type="select" 
+						<Input type="select" name="dealType"
+							index={this.props.indexVal}
+							onChange={this.props.handleHappyhourChange}  
 						>
 							<option selected>select...</option>
-							<option>Food</option>
-							<option>Drink</option>
+							<option value="food">Food</option>
+							<option value="drink">Drink</option>
 						</Input>
 					</Col>
 				</FormGroup>

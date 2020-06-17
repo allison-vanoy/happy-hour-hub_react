@@ -3,6 +3,7 @@ import Header from './components/HeaderComponent';
 import Map from './components/MapComponent';
 import BusinessList from './components/BusinessListComponent';
 import AddNewHappyHour from './components/AddNewHappyHourComponent';
+import BusinessPage from './components/BusinessPageComponent';
 import { BUSINESSES } from './shared/businesses';
 import { HAPPYHOURS } from './shared/happyhours';
 import { Container } from 'reactstrap';
@@ -21,14 +22,22 @@ class App extends Component {
 	
 
 	render() {
+		const BusinessWithId = ({match}) => {
+			return (
+				<BusinessPage 
+					business={this.props.businesses.filter(business => business.id === +match.params.businessId)[0]} 
+					happyhours={this.props.happyhours.filter(happyhours => happyhours.businessId === +match.params.businessId)} 
+				/>
+			);
+		}
+
 		return (
 			<React.Fragment>
 				<Header />
 
 				<Switch>
-					<Route path="/add-new-happy-hour">
-						<AddNewHappyHour />
-					</Route>
+					<Route path="/add-new-happy-hour" component={AddNewHappyHour} />
+					<Route path="/business/:id" component={BusinessWithId} />} />
 					<Route exact path="/">
 						{/* Home page content */}
 						<Container fluid id="mainContainer" className="p-0">

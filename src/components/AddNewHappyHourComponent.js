@@ -16,7 +16,7 @@ class AddNewHappyHour extends Component {
 				id: 0,
 				itemDesc: '',
 				discount: '',
-				type: '',
+				dealType: '',
 				dayOfWeek: [
 					{
 						id: 0,
@@ -69,7 +69,7 @@ class AddNewHappyHour extends Component {
 			id: lastObjId+1,
 			itemDesc: '',
 			discount: '',
-			type: '',
+			dealType: '',
 			dayOfWeek: [
 				{
 					id: 0,
@@ -121,7 +121,7 @@ class AddNewHappyHour extends Component {
 	handleBusinessChange = (event) => {
 		const target = event.target;
 		const name = target.name;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const value = target.value;
 
 		this.setState({
 			[name]: value
@@ -129,29 +129,20 @@ class AddNewHappyHour extends Component {
 	}
 
 	handleHappyhourChange = (event, groupIndex) => {
-		const checkIndex = event.target.getAttribute('index');
-		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
-		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
-		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
+		const value = event.target.value;
+		const name = event.target.name;
+		const newState = {...this.state.happyhourArray}
+		newState[groupIndex].itemDesc = value;
 
-		// this.setState({
-		// 	happyhourArray: {
-		// 		dayOfWeek: newArr,
-		// 	}
-		// });
+		this.setState(newState);
 	}
 	
 	handleDayChange = (event, groupIndex) => {
 		const checkIndex = event.target.getAttribute('index');
-		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
-		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
-		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
+		const newState = {...this.state.happyhourArray}
+		newState[groupIndex].dayOfWeek[checkIndex].isChecked = !newState[groupIndex].dayOfWeek[checkIndex].isChecked;
 
-		// this.setState({
-		// 	happyhourArray: {
-		// 		dayOfWeek: newArr,
-		// 	}
-		// });
+		this.setState(newState);
 	}
 	
 	handleSubmit = (event) => {
@@ -211,7 +202,7 @@ class AddNewHappyHour extends Component {
 									key={happyhour.id} 
 									itemDesc={happyhour.itemDesc}
 									discount={happyhour.discount}
-									type={happyhour.type}
+									dealType={happyhour.dealType}
 									dayOfWeek={happyhour.dayOfWeek}
 									handleDelete={this.handleDelete} 
 									handleHappyhourChange={(event) => this.handleHappyhourChange(event, happyhour.id)}
