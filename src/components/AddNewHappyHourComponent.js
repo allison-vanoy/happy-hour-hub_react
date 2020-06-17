@@ -63,9 +63,10 @@ class AddNewHappyHour extends Component {
 	}
 
 	handleAddMore = () => {
-		let nextNumInArr = (this.state.happyhourArray.length-1) + 1;
+		let lastObj = (this.state.happyhourArray.length-1);
+		let lastObjId = this.state.happyhourArray[lastObj].id;
 		const newArr = [{
-			id: nextNumInArr,
+			id: lastObjId+1,
 			itemDesc: '',
 			discount: '',
 			type: '',
@@ -111,7 +112,7 @@ class AddNewHappyHour extends Component {
 	}
 
 	handleDelete = (indexVal) => {
-		let index = this.state.happyhourArray.indexOf(indexVal);
+		let index = this.state.happyhourArray.findIndex(i => i.id == indexVal);
 		let newHappyhourArray = [...this.state.happyhourArray]
 		newHappyhourArray.splice(index, 1);
         this.setState({ happyhourArray: newHappyhourArray });
@@ -128,13 +129,10 @@ class AddNewHappyHour extends Component {
 	}
 
 	handleHappyhourChange = (event, groupIndex) => {
-		console.log(`event: ${event}, card group index: ${groupIndex}`)
-
 		const checkIndex = event.target.getAttribute('index');
 		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
 		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
 		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
-		console.log(newArr);
 
 		// this.setState({
 		// 	happyhourArray: {
@@ -144,13 +142,10 @@ class AddNewHappyHour extends Component {
 	}
 	
 	handleDayChange = (event, groupIndex) => {
-		console.log(`event: ${event}, card group index: ${groupIndex}`)
-
 		const checkIndex = event.target.getAttribute('index');
 		const happyhourIndex = this.state.happyhourArray.findIndex(i => i.id === groupIndex);
 		let newArr = [...this.state.happyhourArray[happyhourIndex].dayOfWeek];
 		newArr[checkIndex] = {...newArr[checkIndex], isChecked: !newArr[happyhourIndex].isChecked}
-		console.log(newArr);
 
 		// this.setState({
 		// 	happyhourArray: {
