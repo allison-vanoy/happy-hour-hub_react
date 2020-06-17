@@ -6,7 +6,83 @@ class Filter extends Component {
 		super(props);
 
 		this.state = {
-			isFilterOpen: false
+			isFilterOpen: false,
+			dayOfWeek: [
+				{
+					id: 0,
+					name: 'Monday',
+					isChecked: false
+				},
+				{
+					id: 1,
+					name: 'Tuesday',
+					isChecked: false
+				},
+				{
+					id: 2,
+					name: 'Wednesday',
+					isChecked: false
+				},
+				{
+					id: 3,
+					name: 'Thursday',
+					isChecked: false
+				},
+				{
+					id: 4,
+					name: 'Friday',
+					isChecked: false
+				},
+				{
+					id: 5,
+					name: 'Saturday',
+					isChecked: false
+				},
+				{
+					id: 6,
+					name: 'Sunday',
+					isChecked: false
+				},
+			],
+			type: [
+				{
+					id: 0,
+					name: 'Food',
+					isChecked: false
+				},
+				{
+					id: 1,
+					name: 'Drink',
+					isChecked: false
+				},
+			],
+			ratings: [
+				{
+					id: 0,
+					name: '> 1 star',
+					isChecked: false
+				},
+				{
+					id: 1,
+					name: '> 2 star',
+					isChecked: false
+				},
+				{
+					id: 2,
+					name: '> 3 star',
+					isChecked: false
+				},
+				{
+					id: 3,
+					name: '> 4 star',
+					isChecked: false
+				},
+				{
+					id: 4,
+					name: '> 5 star',
+					isChecked: false
+				},
+			]
 		}
 
 		this.toggleFilter = this.toggleFilter.bind(this);
@@ -17,7 +93,45 @@ class Filter extends Component {
 			isFilterOpen: !this.state.isFilterOpen
 		});
 	}
+
+	handleDayChange = (event) => {
+		const index = event.target.getAttribute('index');
+
+		let newArr = JSON.parse(JSON.stringify(this.state.dayOfWeek));;
+		newArr[index].isChecked = !newArr[index].isChecked;
+
+		this.setState({
+			dayOfWeek: newArr
+		})
+	}
 	
+	handleTypeChange = (event) => {
+		const index = event.target.getAttribute('index');
+
+		let newArr = JSON.parse(JSON.stringify(this.state.type));;
+		newArr[index].isChecked = !newArr[index].isChecked;
+
+		this.setState({
+			type: newArr
+		})
+	}
+
+	handleRatingChange = (event) => {
+		const index = event.target.getAttribute('index');
+
+		let newArr = JSON.parse(JSON.stringify(this.state.ratings));;
+		newArr[index].isChecked = !newArr[index].isChecked;
+
+		this.setState({
+			ratings: newArr
+		})
+	}
+
+	handleSubmit = (event) => {
+		alert(JSON.stringify(this.state))
+		event.preventDefault();
+	}
+
 	render() {
 		return (
 			<React.Fragment>
@@ -27,78 +141,56 @@ class Filter extends Component {
 				</a>
 
 				<Collapse isOpen={this.state.isFilterOpen}>
-					<Form id="filterMenu">
+					<Form onSubmit={this.handleSubmit} id="filterMenu">
 					{/* Day of the Week filter section */}
 						<FormGroup row>
 							<Col xs={12}>
 								<Label className="filterLabel">Day of the Week</Label>
 							</Col>
-							<Col xs={4}>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Monday
-									</Label>
-								</FormGroup>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Tuesday
-									</Label>
-								</FormGroup>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Wednesday
-									</Label>
-								</FormGroup>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Thursday
-									</Label>
-								</FormGroup>
-							</Col>
-							<Col xs={4}>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Friday
-									</Label>
-								</FormGroup>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Saturday
-									</Label>
-								</FormGroup>		
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										Sunday
-									</Label>
-								</FormGroup>
+							<Col>
+								{this.state.dayOfWeek.map(day => {
+									return (
+										<FormGroup key={day.id} check>
+											<Label check>
+												<Input type="checkbox" name="dayOfWeek"
+													index={day.id} 
+													checked={day.isChecked} 
+													onChange={this.handleDayChange}
+												/> {' '}
+													{day.name}
+											</Label>
+										</FormGroup>
+									)
+								})}
 							</Col>
 						</FormGroup>
 
 					{/* Type of Happy Hour filter section */}
 						<FormGroup row>
 							<Col xs={12}>
-								<Label className="filterLabel">Type of Happy hour</Label>
+								<Label className="filterLabel">Type of Happy Hour</Label>
 							</Col>
 							<Col xs={4}>
 								<FormGroup check>
 									<Label check>
-										<Input type="checkbox" /> {' '}
-										Food
+										<Input type="checkbox" name="type"
+											index="0"
+											checked={this.state.type.isChecked}
+											onChange={this.handleTypeChange}
+										/> {' '}
+										{this.state.type[0].name}
 									</Label>
 								</FormGroup>
 							</Col>
 							<Col xs={4}>
 								<FormGroup check>
 									<Label check>
-										<Input type="checkbox" /> {' '}
-										Drink
+									<Input type="checkbox" name="type"
+											index="1"
+											checked={this.state.type.isChecked}
+											onChange={this.handleTypeChange}
+										/> {' '}
+										{this.state.type[1].name}
 									</Label>
 								</FormGroup>
 							</Col>
@@ -110,36 +202,20 @@ class Filter extends Component {
 								<Label className="filterLabel">Ratings</Label>
 							</Col>
 							<Col>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										> 1 star
-									</Label>
-								</FormGroup>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										> 2 star
-									</Label>
-								</FormGroup>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										> 3 star
-									</Label>
-								</FormGroup>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										> 4 star
-									</Label>
-								</FormGroup>
-								<FormGroup check>
-									<Label check>
-										<Input type="checkbox" /> {' '}
-										> 5 star
-									</Label>
-								</FormGroup>
+								{this.state.ratings.map(rating => {
+									return (
+										<FormGroup key={rating.id} check>
+											<Label check>
+												<Input type="checkbox" name="ratings"
+													index={rating.id} 
+													checked={rating.isChecked} 
+													onChange={this.handleRatingChange}
+												/> {' '}
+													{rating.name}
+											</Label>
+										</FormGroup>
+									)
+								})}
 							</Col>
 						</FormGroup>
 

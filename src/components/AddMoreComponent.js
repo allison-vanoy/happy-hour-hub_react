@@ -13,17 +13,20 @@ class RenderDetailsForm extends Component {
 
 				<FormGroup>
 					<Label>Item</Label>
-					<Input type="text" placeholder="i.e. traditional wings" />
+					<Input type="text"  
+					placeholder="i.e. traditional wings" />
 				</FormGroup>
 
 				<FormGroup row>
 					<Col>
 						<Label>Price/Discount</Label>
-						<Input type="text" placeholder="i.e. 1/2 price" />
+						<Input type="text"  
+							placeholder="i.e. 1/2 price" />
 					</Col>
 					<Col>
 						<Label>Food/Drink</Label>
-						<Input type="select">
+						<Input type="select" 
+						>
 							<option selected>select...</option>
 							<option>Food</option>
 							<option>Drink</option>
@@ -38,7 +41,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Monday
 							</Label>
 						</FormGroup>
@@ -46,7 +50,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Tuesday
 							</Label>
 						</FormGroup>
@@ -54,7 +59,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Wednesday
 							</Label>
 						</FormGroup>
@@ -62,7 +68,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Thursday
 							</Label>
 						</FormGroup>
@@ -70,7 +77,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Friday
 							</Label>
 						</FormGroup>
@@ -78,7 +86,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Saturday
 							</Label>
 						</FormGroup>
@@ -86,7 +95,8 @@ class RenderDetailsForm extends Component {
 					<Col xs={4}>
 						<FormGroup check>
 							<Label check>
-								<Input type="checkbox" /> {' '}
+								<Input type="checkbox" 
+								/> {' '}
 								Sunday
 							</Label>
 						</FormGroup>
