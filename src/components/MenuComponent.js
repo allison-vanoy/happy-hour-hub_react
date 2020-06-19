@@ -26,16 +26,16 @@ class Menu extends Component {
 				<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
 					<Nav navbar id="navList" className="mt-lg-0 mx-auto">
 						<NavItem>
-							<Link to="/">Home</Link>
+							<Link to="/" onClick={this.toggleNav}>Home</Link>
 						</NavItem>
 						<NavItem>
-							<Link to="/add-new-happy-hour">Add New Happy Hour</Link>
+							<Link to="/add-new-happy-hour" onClick={this.toggleNav}>Add New Happy Hour</Link>
 						</NavItem>
 						<NavItem>
-							<Link to="/sign-in">Sign-In</Link>
+							<Link to="/sign-in" onClick={this.toggleNav}>Sign-In</Link>
 						</NavItem>
 						<NavItem>
-							<Link to="/create-account">Create Account</Link>
+							<Link to="/create-account" onClick={this.toggleNav}>Create Account</Link>
 						</NavItem>
 					</Nav>
 				</Collapse>

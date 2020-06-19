@@ -219,7 +219,7 @@ class Filter extends Component {
 
 						{/* Apply Filters button */}
 						<FormGroup row className="mb-4 mt-4">
-							<Button id="applyFilters" type="submit" className="btn btn-lg mx0auto btn-block filterSubmit">Apply Filters</Button>	
+							<Button id="applyFilters" type="submit" onClick={this.toggleFilter} className="btn btn-lg mx0auto btn-block filterSubmit">Apply Filters</Button>	
 						</FormGroup>	
 					</Form>
 
