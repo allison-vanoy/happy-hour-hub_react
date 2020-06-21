@@ -5,6 +5,22 @@ import Filter from './FilterComponent';
 import Searchbar from './SearchbarComponent';
 
 class Header extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isNavOpen: false
+		};
+
+		this.toggleNav = this.toggleNav.bind(this);
+	}
+
+	toggleNav() {
+		this.setState({
+			isNavOpen: !this.state.isNavOpen 
+		});
+	}
+
 	render() {
 		return (
 			<Jumbotron fluid className="pb-0 pt-1 mb-0 sticky-top">
