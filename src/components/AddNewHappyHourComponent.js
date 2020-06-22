@@ -7,54 +7,58 @@ import {
 } from 'reactstrap';
 import RenderDetailsForm from './AddMoreComponent';
 
+const initialDayOfWeek = [
+	{
+		id: 0,
+		name: 'Monday',
+		isChecked: false
+	},
+	{
+		id: 1,
+		name: 'Tuesday',
+		isChecked: false
+	},
+	{
+		id: 2,
+		name: 'Wednesday',
+		isChecked: false
+	},
+	{
+		id: 3,
+		name: 'Thursday',
+		isChecked: false
+	},
+	{
+		id: 4,
+		name: 'Friday',
+		isChecked: false
+	},
+	{
+		id: 5,
+		name: 'Saturday',
+		isChecked: false
+	},
+	{
+		id: 6,
+		name: 'Sunday',
+		isChecked: false
+	},
+];
+
+const initialHappyhourArray = [{
+	id: 0,
+	itemDesc: '',
+	discount: '',
+	dealType: '',
+	dayOfWeek: initialDayOfWeek
+}];
+
 class AddNewHappyHour extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			happyhourArray: [{
-				id: 0,
-				itemDesc: '',
-				discount: '',
-				dealType: '',
-				dayOfWeek: [
-					{
-						id: 0,
-						name: 'Monday',
-						isChecked: false
-					},
-					{
-						id: 1,
-						name: 'Tuesday',
-						isChecked: false
-					},
-					{
-						id: 2,
-						name: 'Wednesday',
-						isChecked: false
-					},
-					{
-						id: 3,
-						name: 'Thursday',
-						isChecked: false
-					},
-					{
-						id: 4,
-						name: 'Friday',
-						isChecked: false
-					},
-					{
-						id: 5,
-						name: 'Saturday',
-						isChecked: false
-					},
-					{
-						id: 6,
-						name: 'Sunday',
-						isChecked: false
-					},
-				]
-			}],
+			happyhourArray: initialHappyhourArray,
 			businessName: '',
 			address: '',
 			startTime: '',
@@ -70,43 +74,7 @@ class AddNewHappyHour extends Component {
 			itemDesc: '',
 			discount: '',
 			dealType: '',
-			dayOfWeek: [
-				{
-					id: 0,
-					name: 'Monday',
-					isChecked: false
-				},
-				{
-					id: 1,
-					name: 'Tuesday',
-					isChecked: false
-				},
-				{
-					id: 2,
-					name: 'Wednesday',
-					isChecked: false
-				},
-				{
-					id: 3,
-					name: 'Thursday',
-					isChecked: false
-				},
-				{
-					id: 4,
-					name: 'Friday',
-					isChecked: false
-				},
-				{
-					id: 5,
-					name: 'Saturday',
-					isChecked: false
-				},
-				{
-					id: 6,
-					name: 'Sunday',
-					isChecked: false
-				},
-			]
+			dayOfWeek: initialDayOfWeek
 		}];
 		this.setState({	happyhourArray: [...this.state.happyhourArray, ...newArr] });
 	}

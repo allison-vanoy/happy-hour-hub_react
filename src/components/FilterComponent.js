@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Label, FormGroup, Input, Button, Collapse } from 'reactstrap';
 
+
 class Filter extends Component {
 	constructor(props) {
 		super(props);
