@@ -1,10 +1,15 @@
 import React from 'react';
 import Main from './components/MainComponent';
+import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
 
 function App() {
 	return (
-		<Main />
+		<BrowserRouter>
+			<div className="App">
+				<Main />
+			</div>
+		</BrowserRouter>
 	);
 }
 

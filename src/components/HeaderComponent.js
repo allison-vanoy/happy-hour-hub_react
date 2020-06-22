@@ -25,7 +25,7 @@ function Header() {
 
 				{/* main title */}
 				<Col xs={8} lg={6} className="text-center mx-auto mt-1">
-					<h1><a href="#">Happy Hour Hub</a></h1>
+					<h1><a href="/">Happy Hour Hub</a></h1>
 					<p className="subHeading">find or add happy hour specials near you</p>
 				</Col>
 

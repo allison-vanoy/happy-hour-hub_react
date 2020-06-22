@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Header from './HeaderComponent';
-import Homepage from './HomepageComponent';
+import Home from './HomeComponent';
 import AddNewHappyHour from './AddNewHappyHourComponent';
-import BusinessPage from './BusinessPageComponent';
+import BusinessInfo from './BusinessInfoComponent';
 import { BUSINESSES } from '../shared/businesses';
 import { HAPPYHOURS } from '../shared/happyhours';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class Main extends Component {
 	constructor(props) {
@@ -18,14 +18,24 @@ class Main extends Component {
 	}
 
 	render() {
+		const BusinessInfoWithId = ({match}) => {
+			return (
+				<BusinessInfo
+					business={this.state.businesses.filter(business => business.id === +match.params.businessId)[0]}
+					happyhour={this.state.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
+				/>
+			);
+		}
+
 		return (
 			<React.Fragment>
 				<Header />
 
 				<Switch>
-					<Route path="/add-new-happy-hour" component={AddNewHappyHour} />
-					<Route path="/business/" render={() => <BusinessPage businesses={this.state.businesses} happyhours={this.state.happyhours} />} />
-					<Route exact path="/" render={() => <Homepage businesses={this.state.businesses} happyhours={this.state.happyhours} />} />
+					<Route exact path='/home' render={() => <Home businesses={this.state.businesses} happyhours={this.state.happyhours} />} />
+					<Route path='/add-new-happy-hour' component={AddNewHappyHour} />
+					<Route path='/business/:businessId' component={BusinessInfoWithId} />
+					<Redirect to='/home' />
 				</Switch>
 			</React.Fragment>
 		);

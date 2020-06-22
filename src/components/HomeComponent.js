@@ -2,6 +2,10 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
+//font awesome 5 imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHamburger } from '@fortawesome/free-solid-svg-icons'
+import { faBeer } from '@fortawesome/free-solid-svg-icons'
 
 function Map() {
 	return (
@@ -21,7 +25,7 @@ function BusinessList(props) {
 				{happyhourFilter.map(happyhour => { 
 					return (
 						<Row key={happyhour.id} className="specialsDetails">
-							<i className="col-2 fas fa-hamburger pr-0 mt-1" />
+							<FontAwesomeIcon className="col-2 pr-0 mt-1" icon={faHamburger} />
 							<p className="col-6 pl-0 mb-1">{happyhour.name}</p>
 							<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
 						</Row>
@@ -59,7 +63,7 @@ function BusinessList(props) {
 	);
 }
 
-function Homepage(props) {
+function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
 			<Map />
@@ -68,4 +72,4 @@ function Homepage(props) {
 	);
 }
 
-export default Homepage;
+export default Home;

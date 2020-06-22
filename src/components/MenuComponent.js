@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarToggler, Collapse, Nav, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Navbar, NavbarToggler, Collapse, Nav, NavItem } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 class Menu extends Component {
 	constructor(props) {
@@ -26,16 +26,16 @@ class Menu extends Component {
 				<Collapse isOpen={this.state.isNavOpen} id="navbarMenu" navbar>
 					<Nav navbar id="navList" className="mt-lg-0 mx-auto">
 						<NavItem>
-							<Link to="/" onClick={this.toggleNav}>Home</Link>
+							<NavLink className="nav-link" to="/home" onClick={this.toggleNav}>Home</NavLink>
 						</NavItem>
 						<NavItem>
-							<Link to="/add-new-happy-hour" onClick={this.toggleNav}>Add New Happy Hour</Link>
+							<NavLink className="nav-link" to="/add-new-happy-hour" onClick={this.toggleNav}>Add New Happy Hour</NavLink>
 						</NavItem>
 						<NavItem>
-							<Link to="/sign-in" onClick={this.toggleNav}>Sign-In</Link>
+							<NavLink className="nav-link" to="/sign-in" onClick={this.toggleNav}>Sign-In</NavLink>
 						</NavItem>
 						<NavItem>
-							<Link to="/create-account" onClick={this.toggleNav}>Create Account</Link>
+							<NavLink className="nav-link" to="/create-account" onClick={this.toggleNav}>Create Account</NavLink>
 						</NavItem>
 					</Nav>
 				</Collapse>
