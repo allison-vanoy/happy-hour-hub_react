@@ -141,8 +141,8 @@ ul li,
 }
 
 /*icons*/
-.fa-hamburger {
-	color: $secondary-color-dark;
+.fa-cutlery {
+	color: #b9b9b9;
 }
 
 .fa-beer {
@@ -260,9 +260,15 @@ business info page styles
 		font-size: $medium-font;
 	}
 
-	.address,
+	.contactInfo p,
 	.voteTotal {
 		font-size: $small-font;
+		.upVoted {
+			color: green;
+		}
+		.downVoted {
+			color: #cc0000;
+		}
 	}
 }
 

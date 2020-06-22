@@ -25,8 +25,8 @@ function BusinessList(props) {
 				{happyhourFilter.map(happyhour => { 
 					return (
 						<Row key={happyhour.id} className="specialsDetails">
-							<FontAwesomeIcon className="col-2 pr-0 mt-1" icon={faHamburger} />
-							<p className="col-6 pl-0 mb-1">{happyhour.name}</p>
+							<i className="col-2 text-center fa fa-lg fa-cutlery pr-0 mt-1" />
+							<p className="col-6 pl-0 mb-1">{happyhour.description}</p>
 							<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
 						</Row>
 					)

@@ -3,8 +3,10 @@ export const HAPPYHOURS = [
 		id: 0,
 		businessId: 0,
 		type: "food",
-		name: "Bone-in wings",
+		description: "Bone-in wings",
 		deal: "1/2 price",
+		upvote: 45,
+		downvote: 0,
 		available: [
 			"Wednesday"
 		]
@@ -13,8 +15,10 @@ export const HAPPYHOURS = [
 		id: 1,
 		businessId: 0,
 		type: "drink",
-		name: "Domestic draughts",
+		description: "Domestic draughts",
 		deal: "2",
+		upvote: 45,
+		downvote: 0,
 		available: [
 			"Monday",
 			"Tuesday",
@@ -27,8 +31,10 @@ export const HAPPYHOURS = [
 		id: 2,
 		businessId: 0,
 		type: "drink",
-		name: "House wine",
+		description: "House wine",
 		deal: "1.00 off",
+		upvote: 31,
+		downvote: 6,
 		available: [
 			"Monday",
 			"Tuesday",
@@ -41,8 +47,10 @@ export const HAPPYHOURS = [
 		id: 3,
 		businessId: 1,
 		type: "food",
-		name: "Burger",
+		description: "Burger",
 		deal: "5.00",
+		upvote: 8,
+		downvote: 1,
 		available: [
 			"Monday",
 			"Wednesday"
@@ -52,8 +60,10 @@ export const HAPPYHOURS = [
 		id: 4,
 		businessId: 1,
 		type: "drink",
-		name: "Craft cans",
+		description: "Craft cans",
 		deal: "3.00",
+		upvote: 45,
+		downvote: 0,
 		available: [
 			"Thursday",
 			"Friday"

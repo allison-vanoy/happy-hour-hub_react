@@ -6,8 +6,8 @@ export const BUSINESSES = [
 		city: "Cincinnati",
 		state: "OH",
 		zip: "45202",
-		startTime: "4:30",
-		endTime: "6:30",
+		startTime: "4:30pm",
+		endTime: "6:30pm",
 		phone: "555-555-5555"
 	},
 	{
@@ -17,8 +17,8 @@ export const BUSINESSES = [
 		city: "Newport",
 		state: "KY",
 		zip: "41071",
-		startTime: "4:00",
-		endTime: "7:00",
+		startTime: "4:00pm",
+		endTime: "7:00pm",
 		phone: "123-456-7890"
 	}
 ]
