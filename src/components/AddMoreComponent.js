@@ -4,6 +4,7 @@ import {
 	Container, Col, 
 	Card, CardHeader, CardBody, Button, Row
 } from 'reactstrap';
+import { Control } from 'react-redux-form';
 
 class RenderDetailsForm extends Component {
 	render() {
@@ -11,57 +12,57 @@ class RenderDetailsForm extends Component {
 			<CardBody className="happyHourContent border mb-3">
 				<Button className="close happyHourDelete" onClick={() => this.props.handleDelete(this.props.indexVal)} >&times;</Button>
 
-				<FormGroup>
+				<Row className="form-group">
 					<Label>Item</Label>
-					<Input type="text" name="itemDesc"
+					<Control.text model=".itemDesc" name="itemDesc"
 						index={this.props.indexVal}
-						onChange={this.props.handleHappyhourChange}  
 						placeholder="i.e. traditional wings" 
+						className="form-control"
 					/>
-				</FormGroup>
+				</Row>
 
-				<FormGroup row>
+				<Row className="form-group">
 					<Col>
 						<Label>Price/Discount</Label>
-						<Input type="text" name="discount"
+						<Control.text model=".discount" name="discount"
 							index={this.props.indexVal}
-							onChange={this.props.handleHappyhourChange}    
-							placeholder="i.e. 1/2 price" />
+							placeholder="i.e. 1/2 price" 
+							className="form-control"
+						/>
 					</Col>
 					<Col>
 						<Label>Food/Drink</Label>
-						<Input type="select" name="dealType"
+						<Control.select model=".dealType" name="dealType"
 							index={this.props.indexVal}
-							onChange={this.props.handleHappyhourChange}  
+							className="form-control"
 						>
 							<option selected>select...</option>
 							<option value="food">Food</option>
 							<option value="drink">Drink</option>
-						</Input>
+						</Control.select>
 					</Col>
-				</FormGroup>
+				</Row>
 
-				<FormGroup row>
+				<Row className="form-group">
 					<Col xs={12}>
 						<Label>Day(s) Available</Label>
 					</Col>
 					{this.props.dayOfWeek.map(day => {
 						return (
 							<Col xs={4}>
-								<FormGroup key={day.id} check>
+								<div className="form-check" key={day.id}>
 									<Label check>
-										<Input type="checkbox" name="dayOfWeek"
+										<Control.checkbox model=".dayOfWeek" name="dayOfWeek"
 											index={day.id} 
-											checked={day.isChecked} 
-											onChange={this.props.handleDayChange}
+											className="form-check-input"
 										/> {' '}
 										{day.name}
 									</Label>
-								</FormGroup>
+								</div>
 							</Col>
 						)
 					})}
-				</FormGroup>		
+				</Row>		
 			</CardBody>
 		);
 	}
