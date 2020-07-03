@@ -5,6 +5,7 @@ import AddNewHappyHour from './AddNewHappyHourComponent';
 import BusinessInfo from './BusinessInfoComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addHappyhour } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
 	return {
@@ -12,6 +13,10 @@ const mapStateToProps = state => {
 		happyhours: state.happyhours
 	}
 }
+
+const mapDispatchToProps = {
+	addHappyhour: (businessId, type, description, deal, available) => (addHappyhour(businessId, type, description, deal, available))
+};
 
 class Main extends Component {
 
@@ -31,7 +36,7 @@ class Main extends Component {
 
 				<Switch>
 					<Route exact path='/home' render={() => <Home businesses={this.props.businesses} happyhours={this.props.happyhours} />} />
-					<Route path='/add-new-happy-hour' component={AddNewHappyHour} />
+					<Route path='/add-new-happy-hour' render={() => <AddNewHappyHour addHappyhour={this.props.addHappyhour} />} />
 					<Route path='/business/:businessId' component={BusinessInfoWithId} />
 					<Redirect to='/home' />
 				</Switch>
@@ -40,4 +45,4 @@ class Main extends Component {
 	}
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

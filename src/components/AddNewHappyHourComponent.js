@@ -149,6 +149,7 @@ class AddNewHappyHour extends Component {
 	}
 	
 	handleSubmit = (values) => {
+		this.props.addHappyhour(this.props.businessId, this.props.type, this.props.description, this.props.deal, this.props.available);
 		alert(JSON.stringify(values));
 	}
 
