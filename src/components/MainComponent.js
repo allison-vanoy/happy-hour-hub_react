@@ -3,29 +3,26 @@ import Header from './HeaderComponent';
 import Home from './HomeComponent';
 import AddNewHappyHour from './AddNewHappyHourComponent';
 import BusinessInfo from './BusinessInfoComponent';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { addHappyhour } from '../redux/ActionCreators';
-
-const mapStateToProps = state => {
-	return {
-		businesses: state.businesses,
-		happyhours: state.happyhours
-	}
-}
-
-const mapDispatchToProps = {
-	addHappyhour: (businessId, type, description, deal, available) => (addHappyhour(businessId, type, description, deal, available))
-};
+import { BUSINESSES } from '../shared/businesses';
+import { HAPPYHOURS } from '../shared/happyhours';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class Main extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			businesses: BUSINESSES,
+			happyhours: HAPPYHOURS
+		};
+	}
 
 	render() {
 		const BusinessInfoWithId = ({match}) => {
 			return (
 				<BusinessInfo
-					business={this.props.businesses.filter(business => business.id === +match.params.businessId)[0]}
-					happyhour={this.props.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
+					business={this.state.businesses.filter(business => business.id === +match.params.businessId)[0]}
+					happyhour={this.state.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
 				/>
 			);
 		}
@@ -35,8 +32,8 @@ class Main extends Component {
 				<Header />
 
 				<Switch>
-					<Route exact path='/home' render={() => <Home businesses={this.props.businesses} happyhours={this.props.happyhours} />} />
-					<Route path='/add-new-happy-hour' render={() => <AddNewHappyHour addHappyhour={this.props.addHappyhour} />} />
+					<Route exact path='/home' render={() => <Home businesses={this.state.businesses} happyhours={this.state.happyhours} />} />
+					<Route path='/add-new-happy-hour' component={AddNewHappyHour} />
 					<Route path='/business/:businessId' component={BusinessInfoWithId} />
 					<Redirect to='/home' />
 				</Switch>
@@ -45,4 +42,4 @@ class Main extends Component {
 	}
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+export default Main;

@@ -1,12 +1,11 @@
 import * as ActionTypes from './ActionTypes';
 
-export const addHappyhour = (businessId, type, description, deal, available) => ({
+export const addHappyhour = (InitialHappyhourForm) => ({
 	type: ActionTypes.ADD_HAPPYHOUR,
-	payload: {
-		businessId: businessId,
-		type: type,
-		description: description,
-		deal: deal,
-		available: available
-	}
+	payload: InitialHappyhourForm
+});
+
+export const incrementThumb = (upvote) => ({
+	type: ActionTypes.INCREMENT_THUMB,
+	payload: upvote
 });

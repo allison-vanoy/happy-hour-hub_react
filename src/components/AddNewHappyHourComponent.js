@@ -6,7 +6,6 @@ import {
 	Card, CardHeader, CardBody, Button, Row
 } from 'reactstrap';
 import RenderDetailsForm from './AddMoreComponent';
-import { Control, LocalForm } from 'react-redux-form';
 
 const initialHappyhourArray = [{
 	id: 0,
@@ -148,9 +147,9 @@ class AddNewHappyHour extends Component {
 		this.setState(newState);
 	}
 	
-	handleSubmit = (values) => {
-		this.props.addHappyhour(this.props.businessId, this.props.type, this.props.description, this.props.deal, this.props.available);
-		alert(JSON.stringify(values));
+	handleSubmit = (event) => {
+		alert(JSON.stringify(this.state))
+		event.preventDefault();
 	}
 
 	render() {
@@ -159,39 +158,43 @@ class AddNewHappyHour extends Component {
 				<h2 className="mt-4 ml-3">Add New Happy Hour</h2>
 
 				<Container>
-					<LocalForm onSubmit={values => this.handleSubmit(values)}>
-						<Row className="form-group">
+					<Form onSubmit={this.handleSubmit}>
+						<FormGroup>
 							<Label>Business Name</Label>
-							<Control.text model=".businessName" name="businessName"
+							<Input type="text" name="businessName"
+								value={this.state.businessName} 
+								onChange={this.handleBusinessChange} 
 								placeholder="enter business name" 
-								className="form-control"
 							/>
-						</Row>
+						</FormGroup>
 
-						<Row className="form-group">
+						<FormGroup>
 							<Label>Address</Label>
-							<Control.text model=".address" name="address"
+							<Input type="text" name="address"
+								value={this.state.address} 
+								onChange={this.handleBusinessChange} 
 								placeholder="enter business address" 
-								className="form-control"
 							/>
-						</Row>
+						</FormGroup>
 
-						<Row className="form-group">
+						<FormGroup row>
 							<Col xs={6} >
 								<Label>Start Time</Label>
-								<Control.text model=".startTime" name="startTime"
+								<Input type="time" name="startTime"
+									value={this.state.startTime} 
+									onChange={this.handleBusinessChange} 
 									placeholder="start time" 
-									className="form-control"
 								/>
 							</Col>
 							<Col xs={6}>
 								<Label>End Time</Label>
-								<Control.text model=".endTime" name="endTime"
+								<Input type="time" name="endTime"
+									value={this.state.endTime} 
+									onChange={this.handleBusinessChange} 
 									placeholder="end time" 
-									className="form-control"
 								/>
 							</Col>
-						</Row>
+						</FormGroup>
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
@@ -216,7 +219,7 @@ class AddNewHappyHour extends Component {
 						<Row className="mt-5 mx-3">
 							<Button id="submitHappyHour" type="submit" className="btn btn-lg btn-block mb-4">Submit</Button>
 						</Row>
-					</LocalForm>
+					</Form>
 				</Container>
 			</React.Fragment>
 		);
