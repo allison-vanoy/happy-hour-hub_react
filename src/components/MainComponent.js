@@ -5,6 +5,7 @@ import AddNewHappyHour from './AddNewHappyHourComponent';
 import BusinessInfo from './BusinessInfoComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
 import { addBusiness, fetchBusinesses } from '../actions/ActionCreators';
 
 const mapStateToProps = state => {
@@ -17,6 +18,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
 	addBusiness: (businessId, name, address, startTime, endTime) => (addBusiness(businessId, name, address, startTime, endTime)),
 	fetchBusinesses: () => (fetchBusinesses()),
+	resetBusinessForm: () => (actions.reset('businessForm')),
+	resetHappyhourForm: () => (actions.reset('happyhourForm'))
 }
 
 class Main extends Component {
@@ -50,7 +53,13 @@ class Main extends Component {
 							happyhours={this.props.happyhours} 
 						/>
 					} />
-					<Route path='/add-new-happy-hour' render={() => <AddNewHappyHour addBusiness={this.props.addBusiness} />} />
+					<Route path='/add-new-happy-hour' render={() => 
+						<AddNewHappyHour 
+							addBusiness={this.props.addBusiness} 
+							resetBusinessForm={this.props.resetBusinessForm}
+							resetHappyhourForm={this.props.resetHappyhourForm}
+						/>
+					} />
 					<Route path='/business/:businessId' component={BusinessInfoWithId} />
 					<Redirect to='/home' />
 				</Switch>

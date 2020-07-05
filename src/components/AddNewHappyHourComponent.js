@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Label, Input, Container, Col, Card, CardHeader, CardBody, Button, Row } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors, actions } from 'react-redux-form';
 import RenderDetailsForm from './AddMoreComponent';
 
 const required = val => val && val.length;
@@ -146,8 +146,10 @@ class AddNewHappyHour extends Component {
 	// }
 	
 	handleSubmit = (values) => {
-		this.props.addBusiness(this.props.businessId, values.businessName, values.address, values.startTime, values.endTime)
-		alert(JSON.stringify(values))
+		this.props.addBusiness(this.props.businessId, values.businessName, values.address, values.startTime, values.endTime);
+		alert(JSON.stringify(values));
+		this.props.resetBusinessForm();
+		this.props.resetHappyhourForm();
 	}
 
 	render() {
@@ -156,7 +158,7 @@ class AddNewHappyHour extends Component {
 				<h2 className="mt-4 ml-3">Add New Happy Hour</h2>
 
 				<Container>
-					<LocalForm onSubmit={values => this.handleSubmit(values)}>
+					<Form model="businessForm" onSubmit={values => this.handleSubmit(values)}>
 						<Row className="form-group">
 							<Label>Business Name</Label>
 							<Control.text model=".businessName" name="businessName"
@@ -240,20 +242,22 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-							{this.state.happyhourArray.map(happyhour => 
-								<RenderDetailsForm happyhour={happyhour}
-									addBusiness={this.props.addBusiness}
-									// indexVal={happyhour.id} 
-									// key={happyhour.id} 
-									// description={happyhour.description}
-									// discount={happyhour.discount}
-									// dealType={happyhour.dealType}
-									// dayOfWeek={happyhour.dayOfWeek}
-									// handleDelete={this.handleDelete} 
-									// handleHappyhourChange={(event) => this.handleHappyhourChange(event, happyhour.id)}
-									// handleDayChange={(event) => this.handleDayChange(event, happyhour.id)}
-								/>
-							)} 
+							<Form model="happyhourForm">
+								{this.state.happyhourArray.map(happyhour => 
+									<RenderDetailsForm happyhour={happyhour}
+										addBusiness={this.props.addBusiness}
+										// indexVal={happyhour.id} 
+										// key={happyhour.id} 
+										// description={happyhour.description}
+										// discount={happyhour.discount}
+										// dealType={happyhour.dealType}
+										// dayOfWeek={happyhour.dayOfWeek}
+										// handleDelete={this.handleDelete} 
+										// handleHappyhourChange={(event) => this.handleHappyhourChange(event, happyhour.id)}
+										// handleDayChange={(event) => this.handleDayChange(event, happyhour.id)}
+									/>
+								)} 
+							</Form>
 						</Card>
 
 						<Row>
@@ -262,7 +266,7 @@ class AddNewHappyHour extends Component {
 						<Row className="mt-5 mx-3">
 							<Button id="submitHappyHour" type="submit" className="btn btn-lg btn-block mb-4">Submit</Button>
 						</Row>
-					</LocalForm>
+					</Form>
 				</Container>
 			</React.Fragment>
 		);
