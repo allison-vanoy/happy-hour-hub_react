@@ -3,26 +3,36 @@ import Header from './HeaderComponent';
 import Home from './HomeComponent';
 import AddNewHappyHour from './AddNewHappyHourComponent';
 import BusinessInfo from './BusinessInfoComponent';
-import { BUSINESSES } from '../shared/businesses';
-import { HAPPYHOURS } from '../shared/happyhours';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addBusiness, fetchBusinesses } from '../actions/ActionCreators';
+
+const mapStateToProps = state => {
+	return {
+		businesses: state.businesses,
+		happyhours: state.happyhours,
+	};
+};
+
+const mapDispatchToProps = {
+	addBusiness: (businessId, name, address, startTime, endTime) => (addBusiness(businessId, name, address, startTime, endTime)),
+	fetchBusinesses: () => (fetchBusinesses()),
+}
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
 
-		this.state = {
-			businesses: BUSINESSES,
-			happyhours: HAPPYHOURS
-		};
+	componentDidMount() {
+		this.props.fetchBusinesses();
 	}
 
 	render() {
 		const BusinessInfoWithId = ({match}) => {
 			return (
 				<BusinessInfo
-					business={this.state.businesses.filter(business => business.id === +match.params.businessId)[0]}
-					happyhour={this.state.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
+					business={this.props.businesses.businesses.filter(business => business.id === +match.params.businessId)[0]}
+					isLoading={this.props.businesses.isLoading}
+					errMess={this.props.businesses.errMess}
+					happyhour={this.props.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
 				/>
 			);
 		}
@@ -32,8 +42,15 @@ class Main extends Component {
 				<Header />
 
 				<Switch>
-					<Route exact path='/home' render={() => <Home businesses={this.state.businesses} happyhours={this.state.happyhours} />} />
-					<Route path='/add-new-happy-hour' component={AddNewHappyHour} />
+					<Route exact path='/home' render={() => 
+						<Home 
+							businesses={this.props.businesses.businesses} 
+							businessesLoading={this.props.businesses.isLoading}
+							businessesErrMess={this.props.businesses.errMess}
+							happyhours={this.props.happyhours} 
+						/>
+					} />
+					<Route path='/add-new-happy-hour' render={() => <AddNewHappyHour addBusiness={this.props.addBusiness} />} />
 					<Route path='/business/:businessId' component={BusinessInfoWithId} />
 					<Redirect to='/home' />
 				</Switch>
@@ -42,4 +59,4 @@ class Main extends Component {
 	}
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

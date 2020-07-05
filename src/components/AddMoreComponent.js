@@ -1,67 +1,90 @@
 import React, { Component } from 'react';
-import { 
-	Form, FormGroup, Label, Input, 
-	Container, Col, 
-	Card, CardHeader, CardBody, Button, Row
-} from 'reactstrap';
+import { Label, Input, Col, CardBody, Button, Row } from 'reactstrap';
+import { Control, Errors } from 'react-redux-form';
+
+const required = val => val && val.length;
 
 class RenderDetailsForm extends Component {
 	render() {
 		return (
 			<CardBody className="happyHourContent border mb-3">
-				<Button className="close happyHourDelete" onClick={() => this.props.handleDelete(this.props.indexVal)} >&times;</Button>
+				<Button className="close happyHourDelete">&times;</Button>
 
-				<FormGroup>
+				<Row className="form-group">
 					<Label>Item</Label>
-					<Input type="text" name="itemDesc"
-						index={this.props.indexVal}
-						onChange={this.props.handleHappyhourChange}  
+					<Control.text model=".itemDesc" name="itemDesc"
+						index={this.props.happyhour.id}
 						placeholder="i.e. traditional wings" 
+						className="form-control"
+						validators={{
+							required
+						}}
 					/>
-				</FormGroup>
+					<Errors
+						className="text-danger"
+						model=".itemDesc"
+						show="touched"
+						component="div"
+						messages={{
+							required: 'Required'
+						}}
+					/>
+				</Row>
 
-				<FormGroup row>
+				<Row className="form-group">
 					<Col>
 						<Label>Price/Discount</Label>
-						<Input type="text" name="discount"
-							index={this.props.indexVal}
-							onChange={this.props.handleHappyhourChange}    
-							placeholder="i.e. 1/2 price" />
+						<Control.text model=".discount" name="discount"
+							index={this.props.happyhour.id}
+							placeholder="i.e. 1/2 price" 
+							className="form-control"
+							validators={{
+								required
+							}}
+						/>
+						<Errors
+							className="text-danger"
+							model=".discount"
+							show="touched"
+							component="div"
+							messages={{
+								required: 'Required'
+							}}
+						/>
 					</Col>
 					<Col>
 						<Label>Food/Drink</Label>
-						<Input type="select" name="dealType"
-							index={this.props.indexVal}
-							onChange={this.props.handleHappyhourChange}  
+						<Control.select model=".dealType" name="dealType"
+							index={this.props.happyhour.id}
+							className="form-control"
 						>
 							<option selected>select...</option>
 							<option value="food">Food</option>
 							<option value="drink">Drink</option>
-						</Input>
+						</Control.select>
 					</Col>
-				</FormGroup>
+				</Row>
 
-				<FormGroup row>
+				<Row className="form-group">
 					<Col xs={12}>
 						<Label>Day(s) Available</Label>
 					</Col>
-					{this.props.dayOfWeek.map(day => {
+					{this.props.happyhour.dayOfWeek.map(day => {
 						return (
 							<Col xs={4}>
-								<FormGroup key={day.id} check>
+								<div className="form-check" key={day.id} check>
 									<Label check>
-										<Input type="checkbox" name="dayOfWeek"
+										<Control.checkbox model=".dayOfWeek" name="dayOfWeek"
 											index={day.id} 
-											checked={day.isChecked} 
-											onChange={this.props.handleDayChange}
+											className="form-check-input"
 										/> {' '}
 										{day.name}
 									</Label>
-								</FormGroup>
+								</div>
 							</Col>
 						)
 					})}
-				</FormGroup>		
+				</Row>		
 			</CardBody>
 		);
 	}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import { Loading } from './LoadingComponent';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHamburger } from '@fortawesome/free-solid-svg-icons'
@@ -17,9 +18,27 @@ function Map() {
 	);
 }
 
-function BusinessList(props) {
+function BusinessList({businesses, happyhours, isLoading, errMess}) {
+	if (isLoading) {
+		return (
+			<Row id="businessListContent">
+				<Col lg={4} className="p-0">
+					<Loading />
+				</Col>
+			</Row>
+		);
+	}
+	if (errMess) {
+		return (
+			<Row id="businessListContent">
+				<Col lg={4} className="p-0">
+				<h4>{errMess}</h4>
+				</Col>
+			</Row>
+		);
+	}
 	const happyhourDetails = busId => { 
-		const happyhourFilter = props.happyhours.filter(happyhour => happyhour.businessId === busId);
+		const happyhourFilter = happyhours.filter(happyhour => happyhour.businessId === busId);
 		return (
 			<React.Fragment>
 				{happyhourFilter.map(happyhour => { 
@@ -35,7 +54,7 @@ function BusinessList(props) {
 		)
 	};
 
-	const businessDetails = props.businesses.map(business => {
+	const businessDetails = businesses.map(business => {
 		return (
 			<div key={business.id} className="businessContainer border bg-white p-2">
 				<Row className="pb-0">
@@ -45,8 +64,8 @@ function BusinessList(props) {
 
 				{happyhourDetails(business.id)}
 
-				<div class="row text-center seeMore">
-					<div class="col">
+				<div className="row text-center seeMore">
+					<div className="col">
 						<Link to={`/business/${business.id}`}>see more...</Link>
 					</div>
 				</div>
@@ -67,7 +86,12 @@ function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
 			<Map />
-			<BusinessList businesses={props.businesses} happyhours={props.happyhours} />
+			<BusinessList 
+				businesses={props.businesses}  
+				isLoading={props.businessesLoading}
+				errMess={props.businessesErrMess}
+				happyhours={props.happyhours}
+			/>
 		</Container>
 	);
 }

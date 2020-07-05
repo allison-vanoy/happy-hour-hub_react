@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
+import { Loading } from './LoadingComponent';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBeer } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +38,25 @@ function RenderDownVoteResults(props) {
 	return <div></div>
 }
 
-function BusinessInfo({business, happyhour}) {
+function BusinessInfo({business, happyhour, isLoading, errMess}) {
+	if(isLoading) {
+		return (
+			<Container>
+				<Row>
+					<Loading />
+				</Row>
+			</Container>
+		);
+	}
+	if(errMess) {
+		return (
+			<Container>
+				<Row>
+					<h4>{errMess}</h4>
+				</Row>
+			</Container>
+		);
+	}
 	return (
 		<Container fluid id="mainContainer" className="p-0">
 			<Row>
@@ -74,7 +93,7 @@ function BusinessInfo({business, happyhour}) {
 	
 						{/* ratings */}
 						<Row className="mb-3 pt-1">
-							<div class="col d-inline">
+							<div className="col d-inline">
 								<i className="fa fa-star pr-0 mt-1" />
 								<i className="fa fa-star pr-0 mt-1" />
 								<i className="fa fa-star pr-0 mt-1" />
