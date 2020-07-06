@@ -6,7 +6,7 @@ import BusinessInfo from './BusinessInfoComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import { addBusiness, fetchBusinesses } from '../actions/ActionCreators';
+import { addBusiness, fetchBusinesses, fetchHappyhours } from '../actions/ActionCreators';
 
 const mapStateToProps = state => {
 	return {
@@ -18,6 +18,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
 	addBusiness: (businessId, name, address, startTime, endTime) => (addBusiness(businessId, name, address, startTime, endTime)),
 	fetchBusinesses: () => (fetchBusinesses()),
+	fetchHappyhours: () => (fetchHappyhours()),
 	resetBusinessForm: () => (actions.reset('businessForm')),
 	resetHappyhourForm: () => (actions.reset('happyhourForm'))
 }
@@ -26,6 +27,7 @@ class Main extends Component {
 
 	componentDidMount() {
 		this.props.fetchBusinesses();
+		this.props.fetchHappyhours();
 	}
 
 	render() {
@@ -35,7 +37,7 @@ class Main extends Component {
 					business={this.props.businesses.businesses.filter(business => business.id === +match.params.businessId)[0]}
 					isLoading={this.props.businesses.isLoading}
 					errMess={this.props.businesses.errMess}
-					happyhour={this.props.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
+					happyhour={this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
 				/>
 			);
 		}
@@ -50,7 +52,9 @@ class Main extends Component {
 							businesses={this.props.businesses.businesses} 
 							businessesLoading={this.props.businesses.isLoading}
 							businessesErrMess={this.props.businesses.errMess}
-							happyhours={this.props.happyhours} 
+							happyhours={this.props.happyhours.happyhours} 
+							happyhoursLoading={this.props.happyhours.isLoading}
+							happyhoursErrMess={this.props.happyhours.errMess}
 						/>
 					} />
 					<Route path='/add-new-happy-hour' render={() => 

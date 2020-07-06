@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import { BUSINESSES } from '../shared/businesses';
+import { baseUrl } from '../shared/baseUrl';
 
 export const addBusiness = (businessId, name, address, startTime, endTime) => ({
 	type: ActionTypes.ADD_BUSINESS,
@@ -16,9 +16,9 @@ export const fetchBusinesses = () => dispatch => {
 
 	dispatch(businessesLoading());
 
-	setTimeout(() => {
-		dispatch(addBusinesses(BUSINESSES));
-	}, 1000)
+	return fetch(baseUrl + 'businesses')
+		.then(response => response.json())
+		.then(businesses => dispatch(addBusinesses(businesses)));
 };
 
 export const businessesLoading = () => ({
@@ -34,3 +34,39 @@ export const addBusinesses = businesses => ({
 	type: ActionTypes.ADD_BUSINESSES,
 	payload: businesses
 });
+
+
+
+export const addHappyhour = (happyhourId, type, description, deal, available) => ({
+	type: ActionTypes.ADD_HAPPYHOUR,
+	payload: {
+		happyhourId,
+		type,
+		description,
+		deal,
+		available
+	}
+});
+
+export const fetchHappyhours = () => dispatch => {
+
+	dispatch(happyhoursLoading());
+
+	return fetch(baseUrl + 'happyhours')
+		.then(response => response.json())
+		.then(happyhours => dispatch(addHappyhours(happyhours)));
+};
+
+export const happyhoursLoading = () => ({
+	type: ActionTypes.HAPPYHOURS_LOADING
+});
+
+export const happyhoursFailed = errMess => ({
+	type: ActionTypes.HAPPYHOURS_FAILED,
+	payload: errMess
+});
+
+export const addHappyhours = happyhours => ({
+	type: ActionTypes.ADD_HAPPYHOURS,
+	payload: happyhours
+})
