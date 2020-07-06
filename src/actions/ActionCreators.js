@@ -17,8 +17,23 @@ export const fetchBusinesses = () => dispatch => {
 	dispatch(businessesLoading());
 
 	return fetch(baseUrl + 'businesses')
+		.then(response => {
+				if (response.ok) {
+					return response;
+				} else {
+					const error = new Error(`Error ${response.status}: ${response.statusText}`);
+					error.response = response;
+					throw error;
+				}
+			},
+			error => {
+				const errMess = new Error(error.message);
+				throw errMess;
+			}
+		)
 		.then(response => response.json())
-		.then(businesses => dispatch(addBusinesses(businesses)));
+		.then(businesses => dispatch(addBusinesses(businesses)))
+		.catch(error => dispatch(businessesFailed(error.message)));
 };
 
 export const businessesLoading = () => ({
@@ -53,8 +68,23 @@ export const fetchHappyhours = () => dispatch => {
 	dispatch(happyhoursLoading());
 
 	return fetch(baseUrl + 'happyhours')
+			.then(response => {
+				if (response.ok) {
+					return response;
+				} else {
+					const error = new Error(`Error ${response.status}: ${response.statusText}`);
+					error.response = response;
+					throw error;
+				}
+			},
+			error => {
+				const errMess = new Error(error.message);
+				throw errMess;
+			}
+		)
 		.then(response => response.json())
-		.then(happyhours => dispatch(addHappyhours(happyhours)));
+		.then(happyhours => dispatch(addHappyhours(happyhours)))
+		.catch(error => dispatch(happyhoursFailed(error.message)));
 };
 
 export const happyhoursLoading = () => ({
