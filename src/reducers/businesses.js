@@ -14,7 +14,6 @@ export const Businesses = (state = {
 			return {...state, isLoading: false, errMess: action.payload};
 		case ActionTypes.ADD_BUSINESS:
 			const business = action.payload;
-			business.id = state.businesses.length;
 			return {...state, businesses: state.businesses.concat(business)};
 		default:
 			return state;

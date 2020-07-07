@@ -1,16 +1,40 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
-export const addBusiness = (businessId, name, address, startTime, endTime) => ({
-	type: ActionTypes.ADD_BUSINESS,
-	payload: {
+export const postBusiness = (businessId, name, address, startTime, endTime) => dispatch => {
+	const newBusiness = {
 		businessId,
 		name,
 		address,
 		startTime,
 		endTime
-	}
-});
+	};
+
+	return fetch(baseUrl + 'businesses', {
+			method: "POST",
+			body: JSON.stringify(newBusiness),
+			headers: {
+				"Content-type": "application/json"
+			}
+		})
+		.then(response => {
+			if (response.ok) {
+				return response;
+			} else {
+				const error = new Error(`Error ${response.status}: ${response.statusText}`);
+				error.response = response;
+				throw error;
+			}
+		},
+		error => { throw error; }
+	)
+	.then(response => response.json())
+	.then(response => dispatch(addBusinesses(response)))
+	.catch(error => {
+		console.log('post business', error.message);
+		alert(`This business could not be submitted\nError: ${error.message}`);
+	})
+};
 
 export const fetchBusinesses = () => dispatch => {
 
@@ -52,16 +76,40 @@ export const addBusinesses = businesses => ({
 
 
 
-export const addHappyhour = (happyhourId, type, description, deal, available) => ({
-	type: ActionTypes.ADD_HAPPYHOUR,
-	payload: {
+export const postHappyhour = (happyhourId, type, description, deal, available) => dispatch => {
+	const newHappyhour = {
 		happyhourId,
 		type,
 		description,
 		deal,
 		available
-	}
-});
+	};
+
+	return fetch(baseUrl + 'happyhours', {
+			method: "POST",
+			body: JSON.stringify(newHappyhour),
+			headers: {
+				"Content-type": "application/json"
+			}
+		})
+		.then(response => {
+			if (response.ok) {
+				return response;
+			} else {
+				const error = new Error(`Error ${response.status}: ${response.statusText}`);
+				error.response = response;
+				throw error;
+			}
+		},
+		error => { throw error; }
+	)
+	.then(response => response.json())
+	.then(response => dispatch(addHappyhours(response)))
+	.catch(error => {
+		console.log('post happy hour', error.message);
+		alert(`This happy hour could not be submitted\nError: ${error.message}`);
+	})
+};
 
 export const fetchHappyhours = () => dispatch => {
 
@@ -99,4 +147,4 @@ export const happyhoursFailed = errMess => ({
 export const addHappyhours = happyhours => ({
 	type: ActionTypes.ADD_HAPPYHOURS,
 	payload: happyhours
-})
+});

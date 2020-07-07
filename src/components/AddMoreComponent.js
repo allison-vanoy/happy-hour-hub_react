@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { Label, Input, Col, CardBody, Button, Row } from 'reactstrap';
+import { Label, Col, CardBody, Button, Row } from 'reactstrap';
 import { Control, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
 
 class RenderDetailsForm extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			checkedDays: []
+		}
+	}
+
 	render() {
 		return (
 			<CardBody className="happyHourContent border mb-3">
@@ -76,6 +84,7 @@ class RenderDetailsForm extends Component {
 									<Label check>
 										<Control.checkbox model=".dayOfWeek" name="dayOfWeek"
 											index={day.id} 
+											checked={day.isChecked}
 											className="form-check-input"
 										/> {' '}
 										{day.name}

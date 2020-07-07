@@ -14,7 +14,6 @@ export const Happyhours = (state = {
 			return {...state, isLoading: false, errMess: action.payload};
 		case ActionTypes.ADD_HAPPYHOUR:
 			const happyhour = action.payload;
-			happyhour.id = state.happyhours.length;
 			return {...state, happyhours: state.happyhours.concat(happyhour)};
 		default:
 			return state;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Label, Input, Container, Col, Card, CardHeader, CardBody, Button, Row } from 'reactstrap';
+import { Label, Container, Col, Card, CardHeader, Button, Row } from 'reactstrap';
 import { Control, Form, Errors, actions } from 'react-redux-form';
 import RenderDetailsForm from './AddMoreComponent';
 
@@ -145,11 +144,15 @@ class AddNewHappyHour extends Component {
 	// 	this.setState(newState);
 	// }
 	
-	handleSubmit = (values) => {
-		this.props.addBusiness(this.props.businessId, values.businessName, values.address, values.startTime, values.endTime);
+	handleBusinessSubmit = (values) => {
+		this.props.postBusiness(this.props.businessId, values.businessName, values.address, values.startTime, values.endTime);
+		this.props.postHappyhour(this.props.happyhourId, values.itemDesc, values.discount, values.dealType, values.dayOfWeek)
 		alert(JSON.stringify(values));
 		this.props.resetBusinessForm();
 		this.props.resetHappyhourForm();
+	}
+
+	handleHappyhourSubmit = (values) => {
 	}
 
 	render() {
@@ -158,7 +161,7 @@ class AddNewHappyHour extends Component {
 				<h2 className="mt-4 ml-3">Add New Happy Hour</h2>
 
 				<Container>
-					<Form model="businessForm" onSubmit={values => this.handleSubmit(values)}>
+					<Form model="businessForm" onSubmit={values => this.handleBusinessSubmit(values)}>
 						<Row className="form-group">
 							<Label>Business Name</Label>
 							<Control.text model=".businessName" name="businessName"
@@ -242,10 +245,8 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-							<Form model="happyhourForm">
 								{this.state.happyhourArray.map(happyhour => 
 									<RenderDetailsForm happyhour={happyhour}
-										addBusiness={this.props.addBusiness}
 										// indexVal={happyhour.id} 
 										// key={happyhour.id} 
 										// description={happyhour.description}
@@ -257,7 +258,6 @@ class AddNewHappyHour extends Component {
 										// handleDayChange={(event) => this.handleDayChange(event, happyhour.id)}
 									/>
 								)} 
-							</Form>
 						</Card>
 
 						<Row>
