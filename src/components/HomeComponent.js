@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import { GoogleMap } from './MapContainerComponent';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHamburger } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +13,8 @@ function Map() {
 	return (
 		<Row className="mapArea fixed-top">
 			<Col className="p-0">
-				<img id="googleMap" className="w-100" src="assets/images/map_img.jpg" alt="Google map placeholder" />
+				{/* <img id="googleMap" className="w-100" src="assets/images/map_img.jpg" alt="Google map placeholder" /> */}
+				<GoogleMap />
 			</Col>
 		</Row>
 	);

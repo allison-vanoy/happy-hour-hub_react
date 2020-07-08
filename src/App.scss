@@ -174,14 +174,11 @@ index page styles
 /* menu styles */
 .mapArea {
 	margin-top: 125px;
-	:hover {
-		cursor: grab;
-	}
 }
 
 /* fixed content styles */
 .mapArea {
-	z-index: -1;
+	z-index: 0;
 }
 
 /* business content styles */
