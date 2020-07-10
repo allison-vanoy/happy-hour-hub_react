@@ -5,66 +5,60 @@ import RenderDetailsForm from './AddMoreComponent';
 
 const required = val => val && val.length;
 
-const initialHappyhourArray = [{
-	id: 0,
-	description: '',
-	discount: '',
-	dealType: '',
-	dayOfWeek: [
-		{
-			id: 0,
-			name: 'Monday',
-			isChecked: false
-		},
-		{
-			id: 1,
-			name: 'Tuesday',
-			isChecked: false
-		},
-		{
-			id: 2,
-			name: 'Wednesday',
-			isChecked: false
-		},
-		{
-			id: 3,
-			name: 'Thursday',
-			isChecked: false
-		},
-		{
-			id: 4,
-			name: 'Friday',
-			isChecked: false
-		},
-		{
-			id: 5,
-			name: 'Saturday',
-			isChecked: false
-		},
-		{
-			id: 6,
-			name: 'Sunday',
-			isChecked: false
-		},
-	]
-}];
-
 class AddNewHappyHour extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			happyhourArray: initialHappyhourArray,
-			businessName: '',
-			address: '',
-			startTime: '',
-			endTime: '',
+			happyhours: [{
+				id: 0,
+				description: '',
+				discount: '',
+				dealType: '',
+				dayOfWeek: [
+					{
+						id: 0,
+						name: 'Monday',
+						isChecked: false
+					},
+					{
+						id: 1,
+						name: 'Tuesday',
+						isChecked: false
+					},
+					{
+						id: 2,
+						name: 'Wednesday',
+						isChecked: false
+					},
+					{
+						id: 3,
+						name: 'Thursday',
+						isChecked: false
+					},
+					{
+						id: 4,
+						name: 'Friday',
+						isChecked: false
+					},
+					{
+						id: 5,
+						name: 'Saturday',
+						isChecked: false
+					},
+					{
+						id: 6,
+						name: 'Sunday',
+						isChecked: false
+					},
+				]
+			}]
 		}
 	}
 
 	handleAddMore = () => {
-		let lastObj = (this.state.happyhourArray.length-1);
-		let lastObjId = this.state.happyhourArray[lastObj].id;
+		let lastObj = (this.state.happyhours.length-1);
+		let lastObjId = this.state.happyhours[lastObj].id;
 		const newArr = [{
 			id: lastObjId+1,
 			itemDesc: '',
@@ -108,44 +102,11 @@ class AddNewHappyHour extends Component {
 				},
 			]
 		}];
-		this.setState({	happyhourArray: [...this.state.happyhourArray, ...newArr] });
+		this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
 	}
 
-	// handleDelete = (indexVal) => {
-	// 	let index = this.state.happyhourArray.findIndex(i => i.id == indexVal);
-	// 	let newHappyhourArray = [...this.state.happyhourArray]
-	// 	newHappyhourArray.splice(index, 1);
-    //     this.setState({ happyhourArray: newHappyhourArray });
-	// }
-
-	// handleBusinessChange = (event) => {
-	// 	const target = event.target;
-	// 	const name = target.name;
-	// 	const value = target.value;
-
-	// 	this.setState({
-	// 		[name]: value
-	// 	})
-	// }
-
-	// handleHappyhourChange = (event, groupIndex) => {
-	// 	const value = event.target.value;
-	// 	const newState = {...this.state.happyhourArray}
-	// 	newState[groupIndex].itemDesc = value;
-
-	// 	this.setState(newState);
-	// }
-	
-	// handleDayChange = (event, groupIndex) => {
-	// 	const checkIndex = event.target.getAttribute('index');
-	// 	const newState = {...this.state.happyhourArray}
-	// 	newState[groupIndex].dayOfWeek[checkIndex].isChecked = !newState[groupIndex].dayOfWeek[checkIndex].isChecked;
-
-	// 	this.setState(newState);
-	// }
-	
 	handleBusinessSubmit = (values) => {
-		this.props.postBusiness(this.props.businessId, values.businessName, values.address, values.startTime, values.endTime);
+		this.props.postBusiness(this.props.businessId, values.businessName, values.address, values.city, values.state, values.zip, values.startTime, values.endTime);
 		this.props.postHappyhour(this.props.happyhourId, values.itemDesc, values.discount, values.dealType, values.dayOfWeek)
 		alert(JSON.stringify(values));
 		this.props.resetBusinessForm();
@@ -163,43 +124,107 @@ class AddNewHappyHour extends Component {
 				<Container>
 					<Form model="businessForm" onSubmit={values => this.handleBusinessSubmit(values)}>
 						<Row className="form-group">
-							<Label>Business Name</Label>
-							<Control.text model=".businessName" name="businessName"
-								placeholder="enter business name" 
-								className="form-control"
-								validators={{
-									required
-								}}
-							/>
-							<Errors
-								className="text-danger"
-								model=".businessName"
-								show="touched"
-								component="div"
-								messages={{
-									required: 'Required'
-								}}
-							/>
+							<Col>
+								<Label>Business Name</Label>
+								<Control.text model=".businessName" name="businessName"
+									placeholder="enter business name" 
+									className="form-control"
+									validators={{
+										required
+									}}
+								/>
+								<Errors
+									className="text-danger"
+									model=".businessName"
+									show="touched"
+									component="div"
+									messages={{
+										required: 'Required'
+									}}
+								/>
+							</Col>
 						</Row>
 
 						<Row className="form-group">
-							<Label>Address</Label>
-							<Control.text model=".address" name="address"
-								placeholder="enter business address" 
-								className="form-control"
-								validators={{
-									required
-								}}
-							/>
-							<Errors
-								className="text-danger"
-								model=".address"
-								show="touched"
-								component="div"
-								messages={{
-									required: 'Required'
-								}}
-							/>
+							<Col>
+								<Label>Address</Label>
+								<Control.text model=".address" name="address"
+									placeholder="enter business address" 
+									className="form-control"
+									validators={{
+										required
+									}}
+								/>
+								<Errors
+									className="text-danger"
+									model=".address"
+									show="touched"
+									component="div"
+									messages={{
+										required: 'Required'
+									}}
+								/>
+							</Col>
+						</Row>
+
+						<Row className="form-group">
+							<Col xs={7}>
+								<Label>City</Label>
+								<Control.text model=".city" name="city"
+									placeholder="city name" 
+									className="form-control"
+									validators={{
+										required
+									}}
+								/>
+								<Errors
+									className="text-danger"
+									model=".city"
+									show="touched"
+									component="div"
+									messages={{
+										required: 'Required'
+									}}
+								/>
+							</Col>
+							<Col xs={2}>
+								<Label>State</Label>
+								<Control.text model=".state" name="state"
+									placeholder="state" 
+									className="form-control"
+									validators={{
+										required
+									}}
+								/>
+								<Errors
+									className="text-danger"
+									model=".state"
+									show="touched"
+									component="div"
+									messages={{
+										required: 'Required'
+									}}
+								/>
+							</Col>
+							<Col>
+								<Label>Zip</Label>
+								<Control.text model=".zip" name="zip"
+									placeholder="zip code" 
+									className="form-control"
+									validators={{
+										required
+									}}
+								/>
+								<Errors
+									className="text-danger"
+									model=".zip"
+									show="touched"
+									component="div"
+									messages={{
+										required: 'Required'
+									}}
+								/>
+							</Col>
 						</Row>
 
 						<Row className="form-group">
@@ -245,18 +270,8 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-								{this.state.happyhourArray.map(happyhour => 
-									<RenderDetailsForm happyhour={happyhour}
-										// indexVal={happyhour.id} 
-										// key={happyhour.id} 
-										// description={happyhour.description}
-										// discount={happyhour.discount}
-										// dealType={happyhour.dealType}
-										// dayOfWeek={happyhour.dayOfWeek}
-										// handleDelete={this.handleDelete} 
-										// handleHappyhourChange={(event) => this.handleHappyhourChange(event, happyhour.id)}
-										// handleDayChange={(event) => this.handleDayChange(event, happyhour.id)}
-									/>
+								{this.state.happyhours.map(happyhour => 
+									<RenderDetailsForm happyhour={happyhour} />
 								)} 
 						</Card>
 

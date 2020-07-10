@@ -4,11 +4,11 @@ export const Voting = (state = [], action) => {
 
 	switch (action.type) {
 		case ActionTypes.ADD_VOTES:
-			return {...state, ...action.payload}
+			return {...state, happyhours: action.payload}
 
 		case ActionTypes.ADD_UPVOTE:
 			const key = action.payload.id;
-			return {...state, [key]: {...action.payload}}
+			return {...state, happyhours: {...state.happyhours, [key]: {...action.payload, upvote: action.payload.upvote + 1}}}
 
 		// case ActionTypes.ADD_DOWNVOTE:
 			// return {...state}

@@ -16,7 +16,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-	postBusiness: (businessId, name, address, startTime, endTime) => (postBusiness(businessId, name, address, startTime, endTime)),
+	postBusiness: (businessId, name, address, city, state, zip, startTime, endTime) => (postBusiness(businessId, name, address, city, state, zip, startTime, endTime)),
 	postHappyhour: (happyhourId, type, description, deal, available) => (postHappyhour(happyhourId, type, description, deal, available)),
 	updateUpvote: (happyhourId, upvote) => (updateUpvote(happyhourId, upvote)),
 

@@ -1,11 +1,14 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
-export const postBusiness = (businessId, name, address, startTime, endTime) => dispatch => {
+export const postBusiness = (businessId, name, address, city, state, zip, startTime, endTime) => dispatch => {
 	const newBusiness = {
 		businessId,
 		name,
 		address,
+		city,
+		state,
+		zip,
 		startTime,
 		endTime
 	};
@@ -159,7 +162,7 @@ export const updateUpvote = (id, upvote) => dispatch => {
 
 	return fetch(baseUrl + 'happyhours/' + id, {
 			method: "PATCH",
-			body: JSON.stringify({upvote: upvote + 1}),
+			body: JSON.stringify({upvote}),
 			headers: {
 				"Content-type": "application/json"
 			}
