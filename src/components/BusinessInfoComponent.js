@@ -7,38 +7,39 @@ import { faBeer } from '@fortawesome/free-solid-svg-icons';
 import { faDirections } from '@fortawesome/free-solid-svg-icons';
 
 
-function RenderIcon(props) {
+function RenderIcon({dealType}) {
 	const foodIcon = <i className="fa fa-2x fa-cutlery" />;
 	const beerIcon = <FontAwesomeIcon icon={faBeer} />;
 
-	if (props.dealType === "food") {
+	if (dealType === "food") {
 		return <div className="col-2 text-center pr-0 mt-1">{foodIcon}</div>;
-	} else if (props.dealType === "drink") {
+	} else if (dealType === "drink") {
 		return <div className="col-2 text-center fa-2x pr-0">{beerIcon}</div>;
 	}
 }
 
-function RenderUpVoteResults(props) {
-	if (props.happyhour.upvote > 0) {
+function RenderUpVoteResults({votes}) {
+	if (votes > 0) {
 		return (
 			// # of people upvoted
-			<p className="upVoted mb-0">{props.happyhour.upvote} people have enjoyed this happy hour deal.</p>
+			<p className="upVoted mb-0">{votes} people have enjoyed this happy hour deal.</p>
 		);
 	}
 	return <div></div>
 }
 
-function RenderDownVoteResults(props) {
-	if (props.happyhour.downvote > 0) {
+function RenderDownVoteResults({votes}) {
+	if (votes > 0) {
 		return (
 			// # of people downvoted
-			<p className="downVoted mb-0">{props.happyhour.downvote} people said this deal is no longer available.</p>
+			<p className="downVoted mb-0">{votes} people said this deal is no longer available.</p>
 		);
 	}
 	return <div></div>
 }
 
-function BusinessInfo({business, happyhour, isLoading, errMess}) {
+function BusinessInfo({business, happyhour, isLoading, errMess, submitVote}) {
+
 	if(isLoading) {
 		return (
 			<Container>
@@ -111,7 +112,7 @@ function BusinessInfo({business, happyhour, isLoading, errMess}) {
 
 						{/* list of happy hour specials */}
 						{happyhour.map(happyhour => (
-							<div className="happyHourSpecial">
+							<div className="happyHourSpecial" key={happyhour.id}>
 								{/* happy hour deal information */}
 								<Row className="specialsDetails">
 									<RenderIcon dealType={happyhour.type} />
@@ -133,8 +134,8 @@ function BusinessInfo({business, happyhour, isLoading, errMess}) {
 
 								<Row className="voteTotal mb-3">
 									<Col xs={12} className="offset-2 pl-2">
-										<RenderUpVoteResults happyhour={happyhour} />
-										<RenderDownVoteResults happyhour={happyhour} />
+										<RenderUpVoteResults votes={happyhour.upvote} />
+										<RenderDownVoteResults votes={happyhour.downvote} />
 									</Col>
 								</Row>
 
@@ -144,10 +145,11 @@ function BusinessInfo({business, happyhour, isLoading, errMess}) {
 								</Row>
 								<Row className="pb-3 mb-4 specials-border mx-auto">
 									<Col className="text-right mr-3 thumbUp">
-										<i className="fa fa-2x fa-thumbs-up" />
+										<Button type="button" onClick={() => submitVote(happyhour.id, happyhour.upvote)}><i className="fa fa-2x fa-thumbs-up" /></Button>
+										{console.log(`Button contents being passed from BusinessInfo: ${happyhour.id}, ${happyhour.upvote}`)}
 									</Col>
 									<Col className="text-left thumbDown">
-										<i className="fa fa-2x fa-thumbs-down" />
+										<Button type="button" onClick={() => alert('clicked')}><i className="fa fa-2x fa-thumbs-down" /></Button>
 									</Col>
 								</Row>
 							</div>
@@ -157,16 +159,6 @@ function BusinessInfo({business, happyhour, isLoading, errMess}) {
 				</Col>
 			</Row>
 
-			{/* <h1>{business.name}</h1>
-			{happyhour.map(happyhour => { 
-				return (
-					<div key={happyhour.id} className="specialsDetails">
-						<FontAwesomeIcon className="col-2 fa-lg pr-0 mt-1" icon={faBeer} />
-						<p className="col-6 pl-0 mb-1">{happyhour.name}</p>
-						<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
-					</div>
-				)
-			})} */}
 		</Container>
 	)
 }

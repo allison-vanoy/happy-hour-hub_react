@@ -148,3 +148,68 @@ export const addHappyhours = happyhours => ({
 	type: ActionTypes.ADD_HAPPYHOURS,
 	payload: happyhours
 });
+
+
+
+
+
+
+
+export const updateUpvote = (id, upvote) => dispatch => {
+
+	return fetch(baseUrl + 'happyhours/' + id, {
+			method: "PATCH",
+			body: JSON.stringify({upvote: upvote + 1}),
+			headers: {
+				"Content-type": "application/json"
+			}
+		})
+		.then(response => {
+			if (response.ok) {
+				return response;
+			} else {
+				const error = new Error(`Error ${response.status}: ${response.statusText}`);
+				error.response = response;
+				throw error;
+			}
+		},
+		error => { throw error; }
+	)
+	.then(response => response.json())
+	.then(response => dispatch(addUpvote(response)))
+	.catch(error => {
+		console.log('patch upvote', error.message);
+		alert(`Upvote could not be saved\nError: ${error.message}`);
+	})
+};
+
+export const fetchUpvotes = () => dispatch => {
+
+	return fetch(baseUrl + 'happyhours')
+		.then(response => {
+				if (response.ok) {
+					return response;
+				} else {
+					const error = new Error(`Error ${response.status}: ${response.statusText}`);
+					error.response = response;
+					throw error;
+				}
+			},
+			error => {
+				const errMess = new Error(error.message);
+				throw errMess;
+			}
+		)
+		.then(response => response.json())
+		.then(happyhours => dispatch(addVotes(happyhours)))
+};
+
+export const addUpvote = upvote => ({
+	type: ActionTypes.ADD_UPVOTE,
+	payload: upvote
+});
+
+export const addVotes = happyhours => ({
+	type: ActionTypes.ADD_VOTES,
+	payload: happyhours
+});

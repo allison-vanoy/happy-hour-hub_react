@@ -6,8 +6,18 @@ import { Loading } from './LoadingComponent';
 import { GoogleMap } from './MapContainerComponent';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHamburger } from '@fortawesome/free-solid-svg-icons'
 import { faBeer } from '@fortawesome/free-solid-svg-icons'
+
+function RenderIcon({dealType}) {
+	const foodIcon = <i className="fa fa-lg fa-cutlery" />;
+	const beerIcon = <FontAwesomeIcon icon={faBeer} />;
+
+	if (dealType === "food") {
+		return <div className="col-2 text-center pr-0 mt-1">{foodIcon}</div>;
+	} else if (dealType === "drink") {
+		return <div className="col-2 text-center fa-lg pr-0">{beerIcon}</div>;
+	}
+}
 
 function Map() {
 	return (
@@ -46,7 +56,8 @@ function BusinessList({businesses, happyhours, isLoading, errMess}) {
 				{happyhourFilter.map(happyhour => { 
 					return (
 						<Row key={happyhour.id} className="specialsDetails">
-							<i className="col-2 text-center fa fa-lg fa-cutlery pr-0 mt-1" />
+							<RenderIcon dealType={happyhour.type} />
+							{/* <i className="col-2 text-center fa fa-lg fa-cutlery pr-0 mt-1" /> */}
 							<p className="col-6 pl-0 mb-1">{happyhour.description}</p>
 							<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
 						</Row>
