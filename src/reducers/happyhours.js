@@ -15,6 +15,14 @@ export const Happyhours = (state = {
 		case ActionTypes.ADD_HAPPYHOUR:
 			const happyhour = action.payload;
 			return {...state, happyhours: state.happyhours.concat(happyhour)};
+
+		case ActionTypes.CHANGE_VOTE:
+			const key = action.payload.id;
+			const happyhourIndex = state.happyhours.findIndex(h => h.id === key);
+			const currentHappyhours = state.happyhours;
+			currentHappyhours[happyhourIndex] = action.payload;
+			return {...state, happyhours: currentHappyhours};
+
 		default:
 			return state;
 	}

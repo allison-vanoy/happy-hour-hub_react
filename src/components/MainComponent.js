@@ -6,7 +6,7 @@ import BusinessInfo from './BusinessInfoComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import { postBusiness, postHappyhour, updateUpvote, fetchBusinesses, fetchHappyhours, fetchUpvotes } from '../actions/ActionCreators';
+import { postBusiness, postHappyhour, updateVote, fetchBusinesses, fetchHappyhours } from '../actions/ActionCreators';
 
 const mapStateToProps = state => {
 	return {
@@ -16,13 +16,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-	postBusiness: (businessId, name, address, city, state, zip, startTime, endTime) => (postBusiness(businessId, name, address, city, state, zip, startTime, endTime)),
-	postHappyhour: (happyhourId, type, description, deal, available) => (postHappyhour(happyhourId, type, description, deal, available)),
-	updateUpvote: (happyhourId, upvote) => (updateUpvote(happyhourId, upvote)),
+	postBusiness,
+	postHappyhour,
+	updateVote,
 
 	fetchBusinesses: () => (fetchBusinesses()),
 	fetchHappyhours: () => (fetchHappyhours()),
-	fetchUpvotes: () => (fetchUpvotes()),
 
 	resetBusinessForm: () => (actions.reset('businessForm')),
 	resetHappyhourForm: () => (actions.reset('happyhourForm'))
@@ -33,24 +32,24 @@ class Main extends Component {
 	componentDidMount() {
 		this.props.fetchBusinesses();
 		this.props.fetchHappyhours();
-		this.props.fetchUpvotes();
 	}
 	
 	render() {
-		const submitVote = (happyhourId, upvote) => {
-			console.log(`submitVote entered in Main with happyhourId: ${happyhourId} and upvote: ${upvote} `);
-			this.props.updateUpvote(happyhourId, upvote);
+
+		const submitVote = (happyhourId, voteVal, voteType) => {
+			this.props.updateVote(happyhourId, voteVal, voteType);
 		}
 		
 
 		const BusinessInfoWithId = ({match}) => {
+			console.log("business info",this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId ))
 			return (
 				<BusinessInfo
 					business={this.props.businesses.businesses.filter(business => business.id === +match.params.businessId)[0]}
 					isLoading={this.props.businesses.isLoading}
 					errMess={this.props.businesses.errMess}
 					happyhour={this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
-					submitVote={(happyhourId, upvote) => submitVote(happyhourId, upvote)}
+					submitVote={(happyhourId, voteVal, voteType) => submitVote(happyhourId, voteVal, voteType)}
 				/>
 			);
 		}

@@ -145,11 +145,11 @@ function BusinessInfo({business, happyhour, isLoading, errMess, submitVote}) {
 								</Row>
 								<Row className="pb-3 mb-4 specials-border mx-auto">
 									<Col className="text-right mr-3 thumbUp">
-										<Button type="button" onClick={() => submitVote(happyhour.id, happyhour.upvote)}><i className="fa fa-2x fa-thumbs-up" /></Button>
+										<Button type="button" onClick={() => submitVote(happyhour.id, happyhour.upvote, 'upvote')}><i className="fa fa-2x fa-thumbs-up" /></Button>
 										{console.log(`Button contents being passed from BusinessInfo: ${happyhour.id}, ${happyhour.upvote}`)}
 									</Col>
 									<Col className="text-left thumbDown">
-										<Button type="button" onClick={() => alert('clicked')}><i className="fa fa-2x fa-thumbs-down" /></Button>
+										<Button type="button" onClick={() => submitVote(happyhour.id, happyhour.downvote, 'downvote')}><i className="fa fa-2x fa-thumbs-down" /></Button>
 									</Col>
 								</Row>
 							</div>

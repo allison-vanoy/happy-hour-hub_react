@@ -10,6 +10,4 @@ export const ADD_HAPPYHOURS = 'ADD_HAPPYHOURS';
 export const HAPPYHOURS_LOADING = 'HAPPYHOURS_LOADING';
 export const HAPPYHOURS_FAILED = 'HAPPYHOURS_FAILED';
 
-export const ADD_VOTES = 'ADD_VOTES';
-export const ADD_UPVOTE = 'ADD_UPVOTE';
-export const ADD_DOWNVOTE = 'ADD_DOWNVOTE';
+export const CHANGE_VOTE = 'CHANGE_VOTE';
