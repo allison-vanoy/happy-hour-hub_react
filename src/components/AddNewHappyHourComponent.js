@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Label, Container, Col, Card, CardHeader, Button, Row } from 'reactstrap';
-import { Control, Form, Errors, actions } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 import RenderDetailsForm from './AddMoreComponent';
 
 const required = val => val && val.length;
@@ -15,43 +15,7 @@ class AddNewHappyHour extends Component {
 				description: '',
 				discount: '',
 				dealType: '',
-				dayOfWeek: [
-					{
-						id: 0,
-						name: 'Monday',
-						isChecked: false
-					},
-					{
-						id: 1,
-						name: 'Tuesday',
-						isChecked: false
-					},
-					{
-						id: 2,
-						name: 'Wednesday',
-						isChecked: false
-					},
-					{
-						id: 3,
-						name: 'Thursday',
-						isChecked: false
-					},
-					{
-						id: 4,
-						name: 'Friday',
-						isChecked: false
-					},
-					{
-						id: 5,
-						name: 'Saturday',
-						isChecked: false
-					},
-					{
-						id: 6,
-						name: 'Sunday',
-						isChecked: false
-					},
-				]
+				available: []
 			}]
 		}
 	}
@@ -64,56 +28,21 @@ class AddNewHappyHour extends Component {
 			itemDesc: '',
 			discount: '',
 			dealType: '',
-			dayOfWeek: [
-				{
-					id: 0,
-					name: 'Monday',
-					isChecked: false
-				},
-				{
-					id: 1,
-					name: 'Tuesday',
-					isChecked: false
-				},
-				{
-					id: 2,
-					name: 'Wednesday',
-					isChecked: false
-				},
-				{
-					id: 3,
-					name: 'Thursday',
-					isChecked: false
-				},
-				{
-					id: 4,
-					name: 'Friday',
-					isChecked: false
-				},
-				{
-					id: 5,
-					name: 'Saturday',
-					isChecked: false
-				},
-				{
-					id: 6,
-					name: 'Sunday',
-					isChecked: false
-				},
-			]
+			available: []
 		}];
 		this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
 	}
 
 	handleBusinessSubmit = (values) => {
 		this.props.postBusiness(this.props.businessId, values.businessName, values.address, values.city, values.state, values.zip, values.startTime, values.endTime);
-		this.props.postHappyhour(this.props.happyhourId, values.itemDesc, values.discount, values.dealType, values.dayOfWeek)
+		this.props.postHappyhour(this.props.happyhourId, values.itemDesc, values.discount, values.dealType, [values.monday, values.tuesday, values.wednesday, values.thursday, values.friday, values.saturday, values.sunday])
 		alert(JSON.stringify(values));
 		this.props.resetBusinessForm();
 		this.props.resetHappyhourForm();
 	}
 
 	handleHappyhourSubmit = (values) => {
+		console.log(values)
 	}
 
 	render() {
@@ -270,9 +199,10 @@ class AddNewHappyHour extends Component {
 
 						<Card className="border-0">
 						<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-								{this.state.happyhours.map(happyhour => 
+								{/* {this.state.happyhours.map(happyhour => 
 									<RenderDetailsForm happyhour={happyhour} />
-								)} 
+								)}  */}
+								<RenderDetailsForm />
 						</Card>
 
 						<Row>

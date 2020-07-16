@@ -80,15 +80,26 @@ export const addBusinesses = businesses => ({
 
 
 export const postHappyhour = (happyhourId, type, description, deal, available) => dispatch => {
+	const availableBoolToStr = [];
+	
+	const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	for (var i=0; i<daysOfWeek.length; i++) {
+		if (available[i] === true) {
+			availableBoolToStr.push(daysOfWeek[i]);
+		}
+	} 
+
 	const newHappyhour = {
 		happyhourId,
 		type,
 		description,
 		deal,
-		available
+		available: availableBoolToStr,
+		upvote: 0,
+		downvote: 0
 	};
 
-	return fetch(baseUrl + 'happyhours', {
+		return fetch(baseUrl + 'happyhours', {
 			method: "POST",
 			body: JSON.stringify(newHappyhour),
 			headers: {
