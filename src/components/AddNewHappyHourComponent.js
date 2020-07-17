@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Label, Container, Col, Card, CardHeader, Button, Row } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
 import RenderDetailsForm from './AddMoreComponent';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
 const required = val => val && val.length;
 
@@ -10,46 +12,90 @@ class AddNewHappyHour extends Component {
 		super(props);
 
 		this.state = {
-			happyhours: [{
-				id: 0,
-				description: '',
-				discount: '',
-				dealType: '',
-				available: []
-			}]
+			address: '',
+			coordinates: {
+				lat: null,
+				lng: null
+			}
 		}
+		// this.state = {
+		// 	happyhours: [{
+		// 		id: 0,
+		// 		description: '',
+		// 		discount: '',
+		// 		dealType: '',
+		// 		available: []
+		// 	}]
+		// }
 	}
 
-	handleAddMore = () => {
-		let lastObj = (this.state.happyhours.length-1);
-		let lastObjId = this.state.happyhours[lastObj].id;
-		const newArr = [{
-			id: lastObjId+1,
-			itemDesc: '',
-			discount: '',
-			dealType: '',
-			available: []
-		}];
-		this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
-	}
+	// handleAddMore = () => {
+	// 	let lastObj = (this.state.happyhours.length-1);
+	// 	let lastObjId = this.state.happyhours[lastObj].id;
+	// 	const newArr = [{
+	// 		id: lastObjId+1,
+	// 		itemDesc: '',
+	// 		discount: '',
+	// 		dealType: '',
+	// 		available: []
+	// 	}];
+	// 	this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
+	// }
 
 	handleBusinessSubmit = (values) => {
 		this.props.postBusiness(this.props.businessId, values.businessName, values.address, values.city, values.state, values.zip, values.startTime, values.endTime);
 		this.props.postHappyhour(this.props.happyhourId, values.itemDesc, values.discount, values.dealType, [values.monday, values.tuesday, values.wednesday, values.thursday, values.friday, values.saturday, values.sunday])
-		alert(JSON.stringify(values));
 		this.props.resetBusinessForm();
 		this.props.resetHappyhourForm();
 	}
 
-	handleHappyhourSubmit = (values) => {
-		console.log(values)
-	}
+	handleChange = address => {
+		this.setState({ address });
+	};
+	 
+	handleSelect = value => {
+		const results = geocodeByAddress(value);
+		const latLng = getLatLng(results[0]);
+
+		this.setState({ address: value });
+		this.setState({ coordinates: latLng });
+	};
 
 	render() {
 		return (
 			<React.Fragment>
 				<h2 className="mt-4 ml-3">Add New Happy Hour</h2>
 
+				{/* test google places api container */}
+				<Container>
+					<Row className="form-group">
+						<Col>
+							<PlacesAutocomplete value={this.state.address} onChange={this.handleChange} onSelect={value => this.handleSelect(value)}>
+								{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+									<div>
+										<input className="form-control" {...getInputProps({ placeholder: 'test google places' })} />
+
+										<div>
+											{loading ? <div>...loading</div> : null}
+
+											{suggestions.map((suggestion) => {
+												const style = {
+													backgroundColor: suggestion.active ? '#41b6e6' : '#fff'
+												}
+
+												return (
+													<div {...getSuggestionItemProps(suggestion, { style })}>
+															{suggestion.description}
+													</div>
+												)
+											})}
+										</div>
+									</div>
+								)}
+							</PlacesAutocomplete>
+						</Col>
+					</Row>
+				</Container>
 				<Container>
 					<Form model="businessForm" onSubmit={values => this.handleBusinessSubmit(values)}>
 						<Row className="form-group">
