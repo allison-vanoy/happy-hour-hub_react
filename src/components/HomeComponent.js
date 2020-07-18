@@ -23,7 +23,6 @@ function Map() {
 	return (
 		<Row className="mapArea fixed-top">
 			<Col className="p-0">
-				{/* <img id="googleMap" className="w-100" src="assets/images/map_img.jpg" alt="Google map placeholder" /> */}
 				<GoogleMap />
 			</Col>
 		</Row>
@@ -57,7 +56,6 @@ function BusinessList({businesses, happyhours, isLoading, errMess}) {
 					return (
 						<Row key={happyhour.id} className="specialsDetails">
 							<RenderIcon dealType={happyhour.type} />
-							{/* <i className="col-2 text-center fa fa-lg fa-cutlery pr-0 mt-1" /> */}
 							<p className="col-6 pl-0 mb-1">{happyhour.description}</p>
 							<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
 						</Row>
