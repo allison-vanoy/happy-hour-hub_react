@@ -2,16 +2,18 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 export const postBusiness = (
-	businessId, name, address, city, state, zip, startTime, endTime,
+	businessId, placeId, name, address, city, state, zip, coordinates, startTime, endTime,
 	happyhourId, type, description, deal, available
 	) => dispatch => {
 	const newBusiness = {
 		businessId,
+		placeId,
 		name,
 		address,
 		city,
 		state,
 		zip,
+		coordinates,
 		startTime,
 		endTime
 	};

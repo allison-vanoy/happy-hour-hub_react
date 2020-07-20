@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 
 class MapContainer extends Component {
 
@@ -7,22 +7,23 @@ class MapContainer extends Component {
 		super(props);
 
 		this.state = {
-			restaurants: [
-				{ lat: 39.1031, lng: -84.5120},
-				{ lat: 39.085, lng: -84.5120},
-				{ lat: 39.085, lng: -84.490}
-			]
+			selectedCenter: null,
 		}
 	};
 
 	displayMarkers = () => {
 		return (
-			this.state.restaurants.map((restaurant, index) => {
+			this.props.businesses.map((business, placeId) => {
 				return (
-					<Marker key={index} id={index} position={{
-						lat: restaurant.lat,
-						lng: restaurant.lng
-					}} />
+					<Marker key={placeId} id={placeId} 
+						position={{
+							lat: business.coordinates.lat,
+							lng: business.coordinates.lng
+						}} 
+						onClick={() => {
+							console.log(business.coordinates);
+						}}
+					/>
 				)
 			})
 		)
@@ -32,7 +33,7 @@ class MapContainer extends Component {
 
 		const mapStyles = {
 			width: '100vw',
-			height: '510px',
+			height: '400px',
 			left: '15px'
 		}
 

@@ -19,11 +19,11 @@ function RenderIcon({dealType}) {
 	}
 }
 
-function Map() {
+function Map(props) {
 	return (
 		<Row className="mapArea fixed-top">
 			<Col className="p-0">
-				<GoogleMap />
+				<GoogleMap businesses={props.businesses} />
 			</Col>
 		</Row>
 	);
@@ -96,7 +96,7 @@ function BusinessList({businesses, happyhours, isLoading, errMess}) {
 function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
-			<Map />
+			<Map businesses={props.businesses} />
 			<BusinessList 
 				businesses={props.businesses}  
 				isLoading={props.businessesLoading}

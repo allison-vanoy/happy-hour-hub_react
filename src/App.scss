@@ -173,7 +173,7 @@ index page styles
 
 /* menu styles */
 .mapArea {
-	margin-top: 125px;
+	margin-top: 138px;
 }
 
 /* fixed content styles */
@@ -184,9 +184,15 @@ index page styles
 /* business content styles */
 #businessListContent {
 	margin: 0;
-	margin-top: 50%;
+	margin-top: 400px;
 		@media (min-width: 992px) {
 			margin-top: 0;
+			width: 115%;
+			height: 100vh;
+			
+			> div {
+				background: white;
+			}
 		}
 }
 
