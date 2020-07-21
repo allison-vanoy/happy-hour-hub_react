@@ -17,7 +17,7 @@ function Searchbar() {
 
 }
 
-function Header() {
+function Header(props) {
 	return (
 		<Jumbotron fluid className="pb-0 pt-1 mb-0 sticky-top">
 			<Row>
@@ -29,7 +29,12 @@ function Header() {
 					<p className="subHeading">find or add happy hour specials near you</p>
 				</Col>
 
-				<Filter />
+				<Filter 
+					dayOfWeek={props.dayOfWeek}
+					dealType={props.dealType}
+					handleFilterDayChange={props.handleFilterDayChange} 
+					handleFilterTypeChange={props.handleFilterTypeChange} 
+				/>
 			</Row>
 
 			<Searchbar />

@@ -29,7 +29,7 @@ function Map(props) {
 	);
 }
 
-function BusinessList({businesses, happyhours, isLoading, errMess}) {
+function BusinessList({dayOfWeek, dealType, businesses, happyhours, isLoading, errMess}) {
 	if (isLoading) {
 		return (
 			<Row id="businessListContent">
@@ -49,28 +49,57 @@ function BusinessList({businesses, happyhours, isLoading, errMess}) {
 		);
 	}
 	const happyhourDetails = busId => { 
-		const happyhourFilter = happyhours.filter(happyhour => happyhour.businessId === busId);
-		return (
-			<React.Fragment>
-				{happyhourFilter.map(happyhour => { 
-					return (
-						<Row key={happyhour.id} className="specialsDetails">
-							<RenderIcon dealType={happyhour.type} />
-							<p className="col-6 pl-0 mb-1">{happyhour.description}</p>
-							<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
-						</Row>
-					)
-				})}
-			</React.Fragment>
-		)
+		//find name of days that have true for checked state in filter
+		const checkedFilterDays = [];
+		dayOfWeek.map(checkedDay => {
+			if (checkedDay.isChecked) {
+				checkedFilterDays.push(checkedDay.name);
+			}
+		});
+
+		//find which deal types (food/drink) have a true checked state in filter
+		const checkedFilterTypes = [];
+		dealType.map(checkedType => {
+			if (checkedType.isChecked) {
+				checkedFilterTypes.push(checkedType.name.toLowerCase());
+			}
+		});
+
+		//get array of happy hours that have the passed business idea and match filter criteria
+		const happyhourFilter = happyhours.filter(happyhour => (
+			(happyhour.businessId === busId) && (happyhour.available.some(day => checkedFilterDays.includes(day))) && (checkedFilterTypes.includes(happyhour.type))
+		));
+
+		//if filter array isn't empty, return all matching happy hours for the business, 
+		//otherwise return null so business knows not to display
+		if (happyhourFilter.length > 0) {
+			return (
+				<React.Fragment>
+					{happyhourFilter.map(happyhour => { 
+						return (
+							<Row key={happyhour.id} className="specialsDetails">
+								<RenderIcon dealType={happyhour.type} />
+								<p className="col-6 pl-0 mb-1">{happyhour.description}</p>
+								<p className="col text-left pl-0 mb-0">$ {happyhour.deal}</p>
+							</Row>
+						)
+					})}
+				</React.Fragment>
+			)
+		}
+		return null;
 	};
 
+	//return all businesses with names and specific happy hour information
+	//if happy hour information returns null(didn't match filter criteria) don't return any business information
 	const businessDetails = businesses.map(business => {
+		if (happyhourDetails(business.id) === null) {
+			return <div></div>
+		}
 		return (
 			<div key={business.id} className="businessContainer border bg-white p-2">
 				<Row className="pb-0">
 					<h3 className="col-9">{business.name}</h3>
-					<p className="col text-right distance">0.2m away</p>
 				</Row>
 
 				{happyhourDetails(business.id)}
@@ -98,6 +127,9 @@ function Home(props) {
 		<Container fluid id="mainContainer" className="p-0">
 			<Map businesses={props.businesses} />
 			<BusinessList 
+				dayOfWeek={props.dayOfWeek}
+				dealType={props.dealType}
+
 				businesses={props.businesses}  
 				isLoading={props.businessesLoading}
 				errMess={props.businessesErrMess}

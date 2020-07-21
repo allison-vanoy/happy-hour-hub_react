@@ -28,6 +28,84 @@ const mapDispatchToProps = {
 
 class Main extends Component {
 
+	constructor(props) {
+		super(props);
+
+		//state to hold Filter Component changes and update Home Component list display
+		this.state = {
+			dayOfWeek: [
+				{
+					id: 0,
+					name: 'Monday',
+					isChecked: true
+				},
+				{
+					id: 1,
+					name: 'Tuesday',
+					isChecked: true
+				},
+				{
+					id: 2,
+					name: 'Wednesday',
+					isChecked: true
+				},
+				{
+					id: 3,
+					name: 'Thursday',
+					isChecked: true
+				},
+				{
+					id: 4,
+					name: 'Friday',
+					isChecked: true
+				},
+				{
+					id: 5,
+					name: 'Saturday',
+					isChecked: true
+				},
+				{
+					id: 6,
+					name: 'Sunday',
+					isChecked: true
+				},
+			],
+			type: [
+				{
+					id: 0,
+					name: 'Food',
+					isChecked: true
+				},
+				{
+					id: 1,
+					name: 'Drink',
+					isChecked: true
+				},
+			],
+		}
+	}
+
+	handleFilterDayChange = (event) => {
+		console.log('change was attempted');
+		const index = event.target.getAttribute('index');
+
+		let newArr = JSON.parse(JSON.stringify(this.state.dayOfWeek));;
+		newArr[index].isChecked = !newArr[index].isChecked;
+
+		this.setState({ dayOfWeek: newArr })
+	}
+	
+	handleFilterTypeChange = (event) => {
+		console.log(event);
+		const index = event.target.getAttribute('index');
+
+		let newArr = JSON.parse(JSON.stringify(this.state.type));;
+		newArr[index].isChecked = !newArr[index].isChecked;
+
+		this.setState({ type: newArr })
+	}
+
+
 	componentDidMount() {
 		this.props.fetchBusinesses();
 		this.props.fetchHappyhours();
@@ -41,13 +119,12 @@ class Main extends Component {
 		
 
 		const BusinessInfoWithId = ({match}) => {
-			console.log("business info",this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId ))
 			return (
 				<BusinessInfo
 					business={this.props.businesses.businesses.filter(business => business.id === +match.params.businessId)[0]}
 					isLoading={this.props.businesses.isLoading}
 					errMess={this.props.businesses.errMess}
-					happyhour={this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId )}
+					happyhour={this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId)}
 					submitVote={(happyhourId, voteVal, voteType) => submitVote(happyhourId, voteVal, voteType)}
 				/>
 			);
@@ -55,11 +132,19 @@ class Main extends Component {
 
 		return (
 			<React.Fragment>
-				<Header />
+				<Header 
+					dayOfWeek={this.state.dayOfWeek}
+					dealType={this.state.type}
+					handleFilterDayChange={this.handleFilterDayChange}
+					handleFilterTypeChange={this.handleFilterTypeChange}	
+				/>
 
 				<Switch>
 					<Route exact path='/home' render={() => 
 						<Home 
+							dayOfWeek={this.state.dayOfWeek}
+							dealType={this.state.type}
+
 							businesses={this.props.businesses.businesses} 
 							businessesLoading={this.props.businesses.isLoading}
 							businessesErrMess={this.props.businesses.errMess}

@@ -8,82 +8,6 @@ class Filter extends Component {
 
 		this.state = {
 			isFilterOpen: false,
-			dayOfWeek: [
-				{
-					id: 0,
-					name: 'Monday',
-					isChecked: false
-				},
-				{
-					id: 1,
-					name: 'Tuesday',
-					isChecked: false
-				},
-				{
-					id: 2,
-					name: 'Wednesday',
-					isChecked: false
-				},
-				{
-					id: 3,
-					name: 'Thursday',
-					isChecked: false
-				},
-				{
-					id: 4,
-					name: 'Friday',
-					isChecked: false
-				},
-				{
-					id: 5,
-					name: 'Saturday',
-					isChecked: false
-				},
-				{
-					id: 6,
-					name: 'Sunday',
-					isChecked: false
-				},
-			],
-			type: [
-				{
-					id: 0,
-					name: 'Food',
-					isChecked: false
-				},
-				{
-					id: 1,
-					name: 'Drink',
-					isChecked: false
-				},
-			],
-			ratings: [
-				{
-					id: 0,
-					name: '> 1 star',
-					isChecked: false
-				},
-				{
-					id: 1,
-					name: '> 2 star',
-					isChecked: false
-				},
-				{
-					id: 2,
-					name: '> 3 star',
-					isChecked: false
-				},
-				{
-					id: 3,
-					name: '> 4 star',
-					isChecked: false
-				},
-				{
-					id: 4,
-					name: '> 5 star',
-					isChecked: false
-				},
-			]
 		}
 	}
 
@@ -93,44 +17,22 @@ class Filter extends Component {
 		});
 	}
 
-	handleDayChange = (event) => {
-		const index = event.target.getAttribute('index');
+	// handleRatingChange = (event) => {
+	// 	const index = event.target.getAttribute('index');
 
-		let newArr = JSON.parse(JSON.stringify(this.state.dayOfWeek));;
-		newArr[index].isChecked = !newArr[index].isChecked;
+	// 	let newArr = JSON.parse(JSON.stringify(this.state.ratings));;
+	// 	newArr[index].isChecked = !newArr[index].isChecked;
 
-		this.setState({
-			dayOfWeek: newArr
-		})
-	}
-	
-	handleTypeChange = (event) => {
-		const index = event.target.getAttribute('index');
-
-		let newArr = JSON.parse(JSON.stringify(this.state.type));;
-		newArr[index].isChecked = !newArr[index].isChecked;
-
-		this.setState({
-			type: newArr
-		})
-	}
-
-	handleRatingChange = (event) => {
-		const index = event.target.getAttribute('index');
-
-		let newArr = JSON.parse(JSON.stringify(this.state.ratings));;
-		newArr[index].isChecked = !newArr[index].isChecked;
-
-		this.setState({
-			ratings: newArr
-		})
-	}
+	// 	this.setState({
+	// 		ratings: newArr
+	// 	})
+	// }
 
 	handleSubmit = (event) => {
-		alert(JSON.stringify(this.state))
 		event.preventDefault();
 	}
 
+	//changes are sent to Main Component's local state so it's child Home Component can react to filter changes
 	render() {
 		return (
 			<React.Fragment>
@@ -147,14 +49,14 @@ class Filter extends Component {
 								<Label className="filterLabel">Day of the Week</Label>
 							</Col>
 							<Col>
-								{this.state.dayOfWeek.map(day => {
+								{this.props.dayOfWeek.map(day => {
 									return (
 										<FormGroup key={day.id} check>
 											<Label check>
 												<Input type="checkbox" name="dayOfWeek"
 													index={day.id} 
 													checked={day.isChecked} 
-													onChange={this.handleDayChange}
+													onChange={this.props.handleFilterDayChange}
 												/> {' '}
 													{day.name}
 											</Label>
@@ -174,10 +76,10 @@ class Filter extends Component {
 									<Label check>
 										<Input type="checkbox" name="type"
 											index="0"
-											checked={this.state.type.isChecked}
-											onChange={this.handleTypeChange}
+											checked={this.props.dealType[0].isChecked}
+											onChange={this.props.handleFilterTypeChange}
 										/> {' '}
-										{this.state.type[0].name}
+										{this.props.dealType[0].name}
 									</Label>
 								</FormGroup>
 							</Col>
@@ -186,17 +88,17 @@ class Filter extends Component {
 									<Label check>
 									<Input type="checkbox" name="type"
 											index="1"
-											checked={this.state.type.isChecked}
-											onChange={this.handleTypeChange}
+											checked={this.props.dealType[1].isChecked}
+											onChange={this.props.handleFilterTypeChange}
 										/> {' '}
-										{this.state.type[1].name}
+										{this.props.dealType[1].name}
 									</Label>
 								</FormGroup>
 							</Col>
 						</FormGroup>		
 
 					{/* Ratings filter section */}
-						<FormGroup row>
+						{/* <FormGroup row>
 							<Col xs={12}>
 								<Label className="filterLabel">Ratings</Label>
 							</Col>
@@ -217,10 +119,10 @@ class Filter extends Component {
 								})}
 							</Col>
 						</FormGroup>
-
+ */}
 						{/* Apply Filters button */}
 						<FormGroup row className="mb-4 mt-4">
-							<Button id="applyFilters" type="submit" onClick={this.toggleFilter} className="btn btn-lg mx0auto btn-block filterSubmit">Apply Filters</Button>	
+							<Button id="applyFilters" type="submit" onClick={this.toggleFilter} className="btn btn-lg mx0auto btn-block filterSubmit">Close Filter</Button>	
 						</FormGroup>	
 					</Form>
 
