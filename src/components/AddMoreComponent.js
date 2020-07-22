@@ -4,8 +4,7 @@ import { Control, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
 
-function RenderDetailsForm() {
-
+function RenderDetailsForm({ index, handleHappyhourChange }) {
 	const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
 	return (
@@ -14,7 +13,8 @@ function RenderDetailsForm() {
 
 			<Row className="form-group">
 				<Label>Item</Label>
-				<Control.text model=".itemDesc" name="itemDesc"
+				<Control.text model={`.itemDesc${index}`} name="itemDesc"
+					onChange={event => handleHappyhourChange(index, event)}
 					placeholder="i.e. traditional wings" 
 					className="form-control"
 					validators={{
@@ -23,7 +23,7 @@ function RenderDetailsForm() {
 				/>
 				<Errors
 					className="text-danger"
-					model=".itemDesc"
+					model={`.itemDesc${index}`}
 					show="touched"
 					component="div"
 					messages={{
@@ -35,7 +35,8 @@ function RenderDetailsForm() {
 			<Row className="form-group">
 				<Col>
 					<Label>Price/Discount</Label>
-					<Control.text model=".discount" name="discount"
+					<Control.text model={`.discount${index}`} name="discount"
+						onChange={event => handleHappyhourChange(index, event)}
 						placeholder="i.e. 1/2 price" 
 						className="form-control"
 						validators={{
@@ -44,7 +45,7 @@ function RenderDetailsForm() {
 					/>
 					<Errors
 						className="text-danger"
-						model=".discount"
+						model={`.discount${index}`}
 						show="touched"
 						component="div"
 						messages={{
@@ -54,7 +55,8 @@ function RenderDetailsForm() {
 				</Col>
 				<Col>
 					<Label>Food/Drink</Label>
-					<Control.select model=".dealType" name="dealType"
+					<Control.select model={`.dealType${index}`} name="dealType"
+						onChange={event => handleHappyhourChange(index, event)}
 						className="form-control"
 					>
 						<option selected>select...</option>
@@ -73,7 +75,8 @@ function RenderDetailsForm() {
 						<Col xs={4}>
 							<div className="form-check" check>
 								<Label check>
-									<Control.checkbox model={`.${day}`} name={day}
+									<Control.checkbox model={`.${day}${index}`} name={day}
+										onChange={event => handleHappyhourChange(index, event)}
 										className="form-check-input"
 									/> {' '}
 									{day.charAt(0).toUpperCase() + day.substr(1).toLowerCase()}

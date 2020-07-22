@@ -23,32 +23,29 @@ class AddNewHappyHour extends Component {
 			administrative_area_level_1: '',
 			country: '',
 			postal_code: '',
-			placeId: ''
+			placeId: '',
+			happyhours: [{
+				id: 0,
+				itemDesc: '',
+				discount: '',
+				dealType: '',
+				available: []
+			}]
 		}
-		// this.state = {
-		// 	happyhours: [{
-		// 		id: 0,
-		// 		description: '',
-		// 		discount: '',
-		// 		dealType: '',
-		// 		available: []
-		// 	}]
-		// }
-
 	}
 
-	// handleAddMore = () => {
-	// 	let lastObj = (this.state.happyhours.length-1);
-	// 	let lastObjId = this.state.happyhours[lastObj].id;
-	// 	const newArr = [{
-	// 		id: lastObjId+1,
-	// 		itemDesc: '',
-	// 		discount: '',
-	// 		dealType: '',
-	// 		available: []
-	// 	}];
-	// 	this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
-	// }
+	handleAddMore = () => {
+		let lastObj = (this.state.happyhours.length-1);
+		let lastObjId = this.state.happyhours[lastObj].id;
+		const newArr = [{
+			id: lastObjId+1,
+			itemDesc: '',
+			discount: '',
+			dealType: '',
+			available: []
+		}];
+		this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
+	}
 
 	handleBusinessSubmit = (values) => {
 		const address = `${this.state.street_number} ${this.state.route}`;
@@ -57,7 +54,7 @@ class AddNewHappyHour extends Component {
 		const zip = this.state.postal_code;
 
 		this.props.postBusiness(this.props.businessId, this.state.placeId, this.state.businessName, address, city, state, zip, this.state.coordinates, values.startTime, values.endTime,
-			this.props.happyhourId, values.itemDesc, values.discount, values.dealType, [values.monday, values.tuesday, values.wednesday, values.thursday, values.friday, values.saturday, values.sunday]);
+			this.props.happyhourId, this.state.happyhours);
 		this.props.resetBusinessForm();
 		this.resetGoogleAddress();
 		this.props.resetHappyhourForm();
@@ -111,8 +108,35 @@ class AddNewHappyHour extends Component {
 		  }
 	};
 
+	handleHappyhourChange = (index, event) => {
+		const value = event.target.value;
+		const newHappyhourState = {...this.state.happyhours};
+		const name = event.target.name;
+		const nameStr = name;
+		const daySubStr = 'day';
+
+		//add checked days of the week to the "available" array inside happyhours
+		//if day get unchecked, it is removed from the "available" array
+		//all other field values are assigned to the object property with a matching name
+		if (nameStr.includes(daySubStr)) {
+			const properDayName = name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();
+			if(event.target.checked) {
+				newHappyhourState[index].available.push(properDayName);
+			} else {
+					const indexToRemove = newHappyhourState[index].available.findIndex(day => day === properDayName);
+					newHappyhourState[index].available.splice(indexToRemove, 1);
+				}
+		} else {
+				newHappyhourState[index][name] = value;
+			}
+
+		this.setState(newHappyhourState);
+		console.log(this.state.happyhours);
+	}
+
 	render() {
 
+		//place suggestion dropdown should only display establishments in the US
 		const searchOptions = {
 			country: 'us',
 			types: ['establishment']
@@ -253,10 +277,9 @@ class AddNewHappyHour extends Component {
 
 							<Card className="border-0">
 							<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
-									{/* {this.state.happyhours.map(happyhour => 
-										<RenderDetailsForm happyhour={happyhour} />
-									)}  */}
-									<RenderDetailsForm />
+									{this.state.happyhours.map(happyhour => 
+										<RenderDetailsForm index={happyhour.id} handleHappyhourChange={(index, event) => this.handleHappyhourChange(index, event)} />
+									)} 
 							</Card>
 
 							<Row>

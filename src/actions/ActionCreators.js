@@ -3,8 +3,11 @@ import { baseUrl } from '../shared/baseUrl';
 
 export const postBusiness = (
 	businessId, placeId, name, address, city, state, zip, coordinates, startTime, endTime,
-	happyhourId, type, description, deal, available
-	) => dispatch => {
+	happyhourId, happyhours
+) => dispatch => {
+	//both business and happy hour values are passed to action but
+	//only business information is dispatched to addBusiness reducer, then generated id returned to 
+	//dispatch with postHappyhour action using the happyhour values
 	const newBusiness = {
 		businessId,
 		placeId,
@@ -38,7 +41,7 @@ export const postBusiness = (
 	)
 	.then(response => response.json())
 	.then(response => dispatch(addBusinesses(response)))
-	.then(response => dispatch(postHappyhour(response.payload.id, happyhourId, type, description, deal, available)))
+	.then(response => dispatch(postHappyhour(response.payload.id, happyhourId, happyhours)))
 	.catch(error => {
 		console.log('post business', error.message);
 		alert(`This business could not be submitted\nError: ${error.message}`);
@@ -85,50 +88,46 @@ export const addBusinesses = businesses => ({
 
 
 
-const postHappyhour = (businessId, happyhourId, description, deal, type, available) => dispatch => {
-	const availableBoolToStr = [];
-	
-	const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-	for (var i=0; i<daysOfWeek.length; i++) {
-		if (available[i] === true) {
-			availableBoolToStr.push(daysOfWeek[i]);
+const postHappyhour = (businessId, happyhourId, happyhours) => dispatch => {
+	//multiple happy hours can be submitted with each form,
+	//run dispatch for each individually so they concat as an object instead of a sub array
+	happyhours.forEach(h => {
+		let newHappyhour = {
+			happyhourId,
+			description: h.itemDesc,
+			deal: h.discount,
+			type: h.dealType,
+			available: h.available,
+			upvote: 0,
+			downvote: 0,
+			businessId: businessId
 		}
-	} 
 
-	const newHappyhour = {
-		happyhourId,
-		description,
-		deal,
-		type,
-		available: availableBoolToStr,
-		upvote: 0,
-		downvote: 0,
-		businessId: businessId
-	};
-
-	return fetch(baseUrl + 'happyhours', {
-		method: "POST",
-		body: JSON.stringify(newHappyhour),
-		headers: {
-			"Content-type": "application/json"
-		}
-	})
-	.then(response => {
-			if (response.ok) {
-				return response;
-			} else {
-				const error = new Error(`Error ${response.status}: ${response.statusText}`);
-				error.response = response;
-				throw error;
+		return fetch(baseUrl + 'happyhours', {
+			method: "POST",
+			body: JSON.stringify(newHappyhour),
+			headers: {
+				"Content-type": "application/json"
 			}
-		},
-		error => { throw error; }
-	)
-	.then(response => response.json())
-	.then(response => dispatch(addHappyhour(response)))
-	.catch(error => {
-		console.log('post happy hour', error.message);
-		alert(`This happy hour could not be submitted\nError: ${error.message}`);
+		})
+		.then(response => {
+				if (response.ok) {
+					return response;
+				} else {
+					const error = new Error(`Error ${response.status}: ${response.statusText}`);
+					error.response = response;
+					throw error;
+				}
+			},
+			error => { throw error; }
+		)
+		.then(response => response.json())
+		// .then(response => response.forEach(r => dispatch(addHappyhour(r))))
+		.then(response => dispatch(addHappyhour(response[0])))
+		.catch(error => {
+			console.log('post happy hour', error.message);
+			alert(`This happy hour could not be submitted\nError: ${error.message}`);
+		})
 	})
 };
 
