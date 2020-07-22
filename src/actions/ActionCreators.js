@@ -122,7 +122,6 @@ const postHappyhour = (businessId, happyhourId, happyhours) => dispatch => {
 			error => { throw error; }
 		)
 		.then(response => response.json())
-		// .then(response => response.forEach(r => dispatch(addHappyhour(r))))
 		.then(response => dispatch(addHappyhour(response[0])))
 		.catch(error => {
 			console.log('post happy hour', error.message);

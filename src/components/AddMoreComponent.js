@@ -4,17 +4,18 @@ import { Control, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
 
-function RenderDetailsForm({ index, handleHappyhourChange }) {
+function RenderDetailsForm({ index, happyhour, handleHappyhourChange, deleteHappyhour }) {
 	const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
 	return (
 		<CardBody className="happyHourContent border mb-3">
-			<Button className="close happyHourDelete">&times;</Button>
+			<Button className="close happyHourDelete" onClick={() => deleteHappyhour(index)}>&times;</Button>
 
 			<Row className="form-group">
 				<Label>Item</Label>
 				<Control.text model={`.itemDesc${index}`} name="itemDesc"
 					onChange={event => handleHappyhourChange(index, event)}
+					value={happyhour.itemDesc}
 					placeholder="i.e. traditional wings" 
 					className="form-control"
 					validators={{
@@ -37,6 +38,7 @@ function RenderDetailsForm({ index, handleHappyhourChange }) {
 					<Label>Price/Discount</Label>
 					<Control.text model={`.discount${index}`} name="discount"
 						onChange={event => handleHappyhourChange(index, event)}
+						value={happyhour.discount}
 						placeholder="i.e. 1/2 price" 
 						className="form-control"
 						validators={{
@@ -57,9 +59,10 @@ function RenderDetailsForm({ index, handleHappyhourChange }) {
 					<Label>Food/Drink</Label>
 					<Control.select model={`.dealType${index}`} name="dealType"
 						onChange={event => handleHappyhourChange(index, event)}
+						value={happyhour.dealType}
 						className="form-control"
 					>
-						<option selected>select...</option>
+						<option value="default" selected disabled>select...</option>
 						<option value="food">Food</option>
 						<option value="drink">Drink</option>
 					</Control.select>

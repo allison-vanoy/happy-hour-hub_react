@@ -28,20 +28,20 @@ class AddNewHappyHour extends Component {
 				id: 0,
 				itemDesc: '',
 				discount: '',
-				dealType: '',
+				dealType: 'default',
 				available: []
 			}]
 		}
 	}
 
 	handleAddMore = () => {
-		let lastObj = (this.state.happyhours.length-1);
+		let lastObj = this.state.happyhours.length-1;
 		let lastObjId = this.state.happyhours[lastObj].id;
 		const newArr = [{
 			id: lastObjId+1,
 			itemDesc: '',
 			discount: '',
-			dealType: '',
+			dealType: 'default',
 			available: []
 		}];
 		this.setState({	happyhours: [...this.state.happyhours, ...newArr] });
@@ -73,7 +73,7 @@ class AddNewHappyHour extends Component {
 		})
 	}
 
-	handleChange = businessName => {
+	handleBusinessChange = businessName => {
 		this.setState({ businessName });
 	};
 	 
@@ -110,7 +110,7 @@ class AddNewHappyHour extends Component {
 
 	handleHappyhourChange = (index, event) => {
 		const value = event.target.value;
-		const newHappyhourState = {...this.state.happyhours};
+		const newState = {...this.state};
 		const name = event.target.name;
 		const nameStr = name;
 		const daySubStr = 'day';
@@ -121,17 +121,39 @@ class AddNewHappyHour extends Component {
 		if (nameStr.includes(daySubStr)) {
 			const properDayName = name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();
 			if(event.target.checked) {
-				newHappyhourState[index].available.push(properDayName);
+				newState.happyhours[index].available.push(properDayName);
 			} else {
-					const indexToRemove = newHappyhourState[index].available.findIndex(day => day === properDayName);
-					newHappyhourState[index].available.splice(indexToRemove, 1);
+					const indexToRemove = newState.happyhours[index].available.findIndex(day => day === properDayName);
+					newState.happyhours[index].available.splice(indexToRemove, 1);
 				}
 		} else {
-				newHappyhourState[index][name] = value;
-			}
+			newState.happyhours[index][name] = value;
+		}
 
-		this.setState(newHappyhourState);
-		console.log(this.state.happyhours);
+		this.setState(newState);
+		console.log('changed state: ', this.state);
+	}
+
+	deleteHappyhour = (happyhourId) => {
+		//don't delete the last happyhour so give alert to enter at least one
+		if (this.state.happyhours.length > 1) {
+			const newState = {...this.state};
+			//when happyhours are deleted, index changes but object id doesn't,
+			//so index of that object id needs to be found for splice method
+			const happyhourIndex = this.state.happyhours.findIndex(happyhour => happyhour.id === happyhourId);
+
+			//clear contents of object before deleting so contents don't 
+			//re-appear if new object is added
+			newState.happyhours[happyhourIndex].itemDesc = '';
+			newState.happyhours[happyhourIndex].discount = '';
+			newState.happyhours[happyhourIndex].dealType = 'default';
+			
+			//delete index and replace state
+			newState.happyhours.splice(happyhourIndex, 1);
+			this.setState(newState);
+		} else {
+			alert('You must enter at least one happy hour');
+		}
 	}
 
 	render() {
@@ -148,7 +170,7 @@ class AddNewHappyHour extends Component {
 
 				<PlacesAutocomplete 
 					value={this.state.businessName} 
-					onChange={this.handleChange} 
+					onChange={this.handleBusinessChange} 
 					onSelect={(value, placeId, name) => this.handleSelect(value, placeId, name)}
 					searchOptions={searchOptions}
 				>
@@ -278,7 +300,12 @@ class AddNewHappyHour extends Component {
 							<Card className="border-0">
 							<CardHeader className="bg-white border-0">Happy Hour Details</CardHeader>
 									{this.state.happyhours.map(happyhour => 
-										<RenderDetailsForm index={happyhour.id} handleHappyhourChange={(index, event) => this.handleHappyhourChange(index, event)} />
+										<RenderDetailsForm 
+											index={happyhour.id} 
+											happyhour={happyhour}
+											handleHappyhourChange={(index, event) => this.handleHappyhourChange(index, event)} 
+											deleteHappyhour={this.deleteHappyhour}	
+										/>
 									)} 
 							</Card>
 
