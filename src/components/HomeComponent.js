@@ -3,7 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Loading } from './LoadingComponent';
-import { GoogleMap } from './MapContainerComponent';
+import Map from './MapContainerComponent';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBeer } from '@fortawesome/free-solid-svg-icons'
@@ -19,11 +19,11 @@ function RenderIcon({dealType}) {
 	}
 }
 
-function Map(props) {
+function MapContainer(props) {
 	return (
 		<Row className="mapArea fixed-top">
 			<Col className="p-0">
-				<GoogleMap businesses={props.businesses} />
+				<Map businesses={props.businesses} />
 			</Col>
 		</Row>
 	);
@@ -125,7 +125,7 @@ function BusinessList({dayOfWeek, dealType, businesses, happyhours, isLoading, e
 function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
-			<Map businesses={props.businesses} />
+			<MapContainer businesses={props.businesses} />
 			<BusinessList 
 				dayOfWeek={props.dayOfWeek}
 				dealType={props.dealType}

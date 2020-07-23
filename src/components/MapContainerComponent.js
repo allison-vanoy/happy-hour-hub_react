@@ -1,55 +1,62 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
-class MapContainer extends Component {
+class Map extends Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			selectedCenter: null,
-		}
-	};
+			openInfoWindowId: ''
+		};
+	}
 
-	displayMarkers = () => {
+	handleInfoWindowToggle = (markerId) => {
+		this.setState({ openInfoWindowId: markerId })
+	}
+
+	displayMarkers() {
 		return (
 			this.props.businesses.map((business, placeId) => {
 				return (
-					<Marker key={placeId} id={placeId} 
-						position={{
+
+					<Marker
+						key={placeId}
+						position={{ 
 							lat: business.coordinates.lat,
-							lng: business.coordinates.lng
-						}} 
-						onClick={() => {
-							console.log(business.coordinates);
+							lng: business.coordinates.lng 
 						}}
-					/>
-				)
+						onClick={() => this.handleInfoWindowToggle(placeId)}
+					>
+						{this.state.openInfoWindowId === placeId && (
+							<InfoWindow>
+								<div>{business.name}</div>
+							</InfoWindow>
+						)}
+					</Marker>
+				);
 			})
 		)
 	}
 
 	render() {
 
-		const mapStyles = {
-			width: '100vw',
-			height: '400px',
-			left: '15px'
-		}
-
-		return (
-			<Map
-				google={this.props.google}
-				zoom={12}
-				style={mapStyles}
-				initialCenter={{ lat: 39.1031, lng: -84.5120}}
+		const GoogleMapExample = withGoogleMap(props => (
+			<GoogleMap
+				defaultCenter={{ lat: 39.1031, lng: -84.5120 }}
+				defaultZoom={ 12 }
 			>
 				{this.displayMarkers()}
-			</Map>
+			</GoogleMap>
+		));
+
+		return(
+			<GoogleMapExample
+				containerElement={ <div style={{ height: `400px`, width: '100vw' }} /> }
+				mapElement={ <div style={{ height: `100%` }} /> }
+			/>
 		);
 	}
 };
 
-export const GoogleMap = GoogleApiWrapper({ 
-	apiKey: ''
-})(MapContainer);
+export default Map;
