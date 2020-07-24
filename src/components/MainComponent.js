@@ -82,6 +82,25 @@ class Main extends Component {
 					isChecked: true
 				},
 			],
+			disabledUpButtons: [],
+			disabledDownButtons: []
+		}
+	}
+
+	addDisabledButton = (buttonId, voteType) => {
+		//add upvote or downvote happy hour id to array for disabling when clicked so it cannot be chosen multiple times per session
+		//if downvote is clicked after upvote was previously clicked (and disabled) re-enable upvote and disable downvote
+		if (voteType === 'upvote') {
+			this.setState({ disabledUpButtons: this.state.disabledUpButtons.concat(buttonId) })
+			if (this.state.disabledDownButtons.includes(buttonId)) {
+				this.setState({ disabledDownButtons: this.state.disabledDownButtons.splice(buttonId, 1) })
+			}
+		}
+		if (voteType === 'downvote') {
+			this.setState({ disabledDownButtons: this.state.disabledDownButtons.concat(buttonId) })
+			if (this.state.disabledUpButtons.includes(buttonId)) {
+				this.setState({ disabledUpButtons: this.state.disabledUpButtons.splice(buttonId, 1) })
+			}
 		}
 	}
 
@@ -113,11 +132,6 @@ class Main extends Component {
 	
 	render() {
 
-		const submitVote = (happyhourId, voteVal, voteType) => {
-			this.props.updateVote(happyhourId, voteVal, voteType);
-		}
-		
-
 		const BusinessInfoWithId = ({match}) => {
 			return (
 				<BusinessInfo
@@ -125,7 +139,13 @@ class Main extends Component {
 					isLoading={this.props.businesses.isLoading}
 					errMess={this.props.businesses.errMess}
 					happyhour={this.props.happyhours.happyhours.filter(happyhour => happyhour.businessId === +match.params.businessId)}
-					submitVote={(happyhourId, voteVal, voteType) => submitVote(happyhourId, voteVal, voteType)}
+					updateVote={this.props.updateVote}
+					// disableVote={this.disableVote}
+					// upVoteDisabled={this.state.upVoteDisabled}
+					// downVoteDisabled={this.state.downVoteDisabled}
+					disabledUpButtons={this.state.disabledUpButtons}
+					disabledDownButtons={this.state.disabledDownButtons}
+					addDisabledButton={this.addDisabledButton}
 				/>
 			);
 		}
