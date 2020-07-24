@@ -3,6 +3,7 @@ import { Label, Container, Col, Card, CardHeader, Button, Row } from 'reactstrap
 import { Control, Form, Errors } from 'react-redux-form';
 import RenderDetailsForm from './AddMoreComponent';
 import PlacesAutocomplete from 'react-places-autocomplete';
+import { Redirect } from 'react-router-dom';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
 const required = val => val && val.length;
@@ -30,7 +31,8 @@ class AddNewHappyHour extends Component {
 				discount: '',
 				dealType: 'default',
 				available: []
-			}]
+			}],
+			redirect: null
 		}
 	}
 
@@ -54,23 +56,10 @@ class AddNewHappyHour extends Component {
 		const zip = this.state.postal_code;
 
 		this.props.postBusiness(this.props.businessId, this.state.placeId, this.state.businessName, address, city, state, zip, this.state.coordinates, values.startTime, values.endTime,
-			this.props.happyhourId, this.state.happyhours);
-		this.props.resetBusinessForm();
-		this.resetGoogleAddress();
-		this.props.resetHappyhourForm();
-	}
-
-	resetGoogleAddress() {
-		this.setState({
-			businessName: '',
-			street_number: '',
-			route: '',
-			locality: '',
-			administrative_area_level_1: '',
-			country: '',
-			postal_code: '',
-			placeId: ''
-		})
+			this.props.happyhourId, this.state.happyhours)
+			.then(this.props.resetBusinessForm())
+			.then(this.props.resetHappyhourForm())
+			.then(this.setState({ redirect: '/home' }))
 	}
 
 	handleBusinessChange = businessName => {
@@ -131,7 +120,6 @@ class AddNewHappyHour extends Component {
 		}
 
 		this.setState(newState);
-		console.log('changed state: ', this.state);
 	}
 
 	deleteHappyhour = (happyhourId) => {
@@ -157,6 +145,9 @@ class AddNewHappyHour extends Component {
 	}
 
 	render() {
+		if (this.state.redirect) {
+			return <Redirect to={this.state.redirect} />
+		}
 
 		//place suggestion dropdown should only display establishments in the US
 		const searchOptions = {

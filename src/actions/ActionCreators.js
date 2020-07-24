@@ -40,7 +40,7 @@ export const postBusiness = (
 		error => { throw error; }
 	)
 	.then(response => response.json())
-	.then(response => dispatch(addBusinesses(response)))
+	.then(response => dispatch(addBusiness(response)))
 	.then(response => dispatch(postHappyhour(response.payload.id, happyhourId, happyhours)))
 	.catch(error => {
 		console.log('post business', error.message);
@@ -86,6 +86,10 @@ export const addBusinesses = businesses => ({
 	payload: businesses
 });
 
+export const addBusiness = business => ({
+	type: ActionTypes.ADD_BUSINESS,
+	payload: business
+});
 
 
 const postHappyhour = (businessId, happyhourId, happyhours) => dispatch => {
@@ -122,7 +126,7 @@ const postHappyhour = (businessId, happyhourId, happyhours) => dispatch => {
 			error => { throw error; }
 		)
 		.then(response => response.json())
-		.then(response => dispatch(addHappyhour(response[0])))
+		.then(response => dispatch(addHappyhour(response)))
 		.catch(error => {
 			console.log('post happy hour', error.message);
 			alert(`This happy hour could not be submitted\nError: ${error.message}`);
