@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 
 class Map extends Component {
@@ -30,7 +31,17 @@ class Map extends Component {
 					>
 						{this.state.openInfoWindowId === placeId && (
 							<InfoWindow>
-								<div>{business.name}</div>
+								<div>
+									<div style={{ fontSize: '16px' }}>{business.name}</div>
+									<div className='seeMore' style={{textAlign: 'center', marginTop: 10}}>
+										<Link 
+											to={`/business/${business.id}`}
+											
+										>
+												see happy hours
+										</Link>
+										</div>
+									</div>
 							</InfoWindow>
 						)}
 					</Marker>
