@@ -6,7 +6,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import { Redirect } from 'react-router-dom';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 
-const required = val => val && val.length;
+const required = (val) => val && val.length;
 
 class AddNewHappyHour extends Component {
 	constructor(props) {
@@ -54,12 +54,22 @@ class AddNewHappyHour extends Component {
 		const city = this.state.locality;
 		const state = this.state.administrative_area_level_1;
 		const zip = this.state.postal_code;
+		let error = false;
 
-		this.props.postBusiness(this.props.businessId, this.state.placeId, this.state.businessName, address, city, state, zip, this.state.coordinates, values.startTime, values.endTime,
-			this.props.happyhourId, this.state.happyhours)
-			.then(this.props.resetBusinessForm())
-			.then(this.props.resetHappyhourForm())
-			.then(this.setState({ redirect: '/home' }))
+		this.state.happyhours.forEach(happyhour => {
+			if (happyhour.available.length === 0) {
+				alert('Select available day(s)');
+				error = true;
+			} 
+		})
+
+		if (!error) {
+			this.props.postBusiness(this.props.businessId, this.state.placeId, this.state.businessName, address, city, state, zip, this.state.coordinates, values.startTime, values.endTime,
+				this.props.happyhourId, this.state.happyhours)
+				.then(this.props.resetBusinessForm())
+				.then(this.props.resetHappyhourForm())
+				.then(this.setState({ redirect: '/home' }))
+		}
 	}
 
 	handleBusinessChange = businessName => {
@@ -176,13 +186,14 @@ class AddNewHappyHour extends Component {
 										id="businessName"
 										className="form-control"
 										placeholder="enter business name"
+										required
 										validators={{
 											required
 										}} 
 										{...getInputProps()} 
 									/>
 									<Errors
-										className="text-danger"
+										className="text-danger errorMsg"
 										model=".businessName"
 										show="touched"
 										component="div"
@@ -253,15 +264,17 @@ class AddNewHappyHour extends Component {
 									<Control.text model=".startTime" name="startTime"
 										placeholder="start time" 
 										className="form-control"
+										required
 										validators={{
 											required
 										}}
 									/>
 									<Errors
-										className="text-danger"
+										className="text-danger errorMsg"
 										model=".startTime"
 										show="touched"
 										component="div"
+										required
 										messages={{
 											required: 'Required'
 										}}
@@ -272,12 +285,13 @@ class AddNewHappyHour extends Component {
 									<Control.text model=".endTime" name="endTime"
 										placeholder="end time" 
 										className="form-control"
+										required
 										validators={{
 											required
 										}}
 									/>
 									<Errors
-										className="text-danger"
+										className="text-danger errorMsg"
 										model=".endTime"
 										show="touched"
 										component="div"

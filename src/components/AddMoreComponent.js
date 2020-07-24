@@ -2,7 +2,7 @@ import React from 'react';
 import { Label, Col, CardBody, Button, Row } from 'reactstrap';
 import { Control, Errors } from 'react-redux-form';
 
-const required = val => val && val.length;
+const required = (val) => val && val.length;
 
 function RenderDetailsForm({ index, happyhour, handleHappyhourChange, deleteHappyhour }) {
 	const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -18,12 +18,13 @@ function RenderDetailsForm({ index, happyhour, handleHappyhourChange, deleteHapp
 					value={happyhour.itemDesc}
 					placeholder="i.e. traditional wings" 
 					className="form-control"
+					required
 					validators={{
 						required
 					}}
 				/>
 				<Errors
-					className="text-danger"
+					className="text-danger errorMsg"
 					model={`.itemDesc${index}`}
 					show="touched"
 					component="div"
@@ -41,12 +42,13 @@ function RenderDetailsForm({ index, happyhour, handleHappyhourChange, deleteHapp
 						value={happyhour.discount}
 						placeholder="i.e. 1/2 price" 
 						className="form-control"
+						required
 						validators={{
 							required
 						}}
 					/>
 					<Errors
-						className="text-danger"
+						className="text-danger errorMsg"
 						model={`.discount${index}`}
 						show="touched"
 						component="div"
@@ -58,14 +60,31 @@ function RenderDetailsForm({ index, happyhour, handleHappyhourChange, deleteHapp
 				<Col>
 					<Label>Food/Drink</Label>
 					<Control.select model={`.dealType${index}`} name="dealType"
-						onChange={event => handleHappyhourChange(index, event)}
+						onChange={event => {
+							handleHappyhourChange(index, event)
+							console.log('select value',happyhour.dealType)
+						}}
 						value={happyhour.dealType}
 						className="form-control"
+						required
+						validators={
+							value => value === undefined, 
+							{required}
+						}
 					>
-						<option value="default" selected disabled>select...</option>
+						<option value="default" defaultValue disabled>select...</option>
 						<option value="food">Food</option>
 						<option value="drink">Drink</option>
 					</Control.select>
+					<Errors
+						className="text-danger errorMsg"
+						model={`.dealType${index}`}
+						show="touched"
+						component="div"
+						messages={{
+							required: 'Required'
+						}}
+					/>
 				</Col>
 			</Row>
 
