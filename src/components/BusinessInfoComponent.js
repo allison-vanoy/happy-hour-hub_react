@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import { Carousel } from 'react-responsive-carousel';
 //font awesome 5 imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBeer } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +40,24 @@ function RenderDownVoteResults({votes}) {
 	return <div></div>
 }
 
+class CarouselContainer extends Component {
+    render() {
+        return (
+            <Carousel showThumbs={false} dynamicHeight={true}>
+                <div>
+                    <img src="../assets/images/food_1.jpg" />
+                </div>
+                <div>
+                    <img src="../assets/images/food_2.jpg" />
+                </div>
+                <div>
+                    <img src="../assets/images/food_3.jpg" />
+                </div>
+            </Carousel>
+        );
+    }
+}
+
 class BusinessInfo extends Component {
 
 	constructor(props) {
@@ -73,7 +93,7 @@ class BusinessInfo extends Component {
 			<Container fluid id="mainContainer" className="p-0">
 				<Row>
 					<Col>
-						<p className="text-center">Carousel placeholder</p>
+						<CarouselContainer />
 					</Col>
 				</Row>
 
@@ -83,7 +103,7 @@ class BusinessInfo extends Component {
 							{/* business name and distance */}
 							<Row className="p-0">
 								<h2 className="col-9">{business.name}</h2>
-								<p className="col text-right distance">0.2m away</p>
+								{/* <p className="col text-right distance">0.2m away</p> */}
 							</Row>
 
 							{/* business address and contact icons */}
@@ -96,15 +116,15 @@ class BusinessInfo extends Component {
 							</Row>
 							<Row>	
 								<Col xs={1} className="px-1">
-									<Button type="button" className="btn-link border-0"><i className="fa fa-lg fa-phone" href={"tel:+"+business.phone} /></Button>
+									<Button type="button" className="btn-link border-0" href={"tel:+"+business.phone}><i className="fa fa-lg fa-phone" /></Button>
 								</Col>
 								<Col xs={1} className="px-0">
-									<Button type="button" className="btn-link border-0"><FontAwesomeIcon className="fa fa-lg " icon={faDirections} href="https://goo.gl/maps/HxCf11Ykx5KqBdX39" /></Button>
+									<Button type="button" className="btn-link border-0" href={"https://www.google.com/maps/search/?api=1&query=Google&query_place_id="+business.placeId} target="_blank" ><FontAwesomeIcon className="fa fa-lg " icon={faDirections} /></Button>
 								</Col>
 							</Row>
 		
 							{/* ratings */}
-							<Row className="mb-3 pt-1">
+							{/* <Row className="mb-3 pt-1">
 								<div className="col d-inline">
 									<i className="fa fa-star pr-0 mt-1" />
 									<i className="fa fa-star pr-0 mt-1" />
@@ -112,7 +132,7 @@ class BusinessInfo extends Component {
 									<i className="fa fa-star fa-star-half-o pr-0 mt-1" />
 									<i className="fa fa-star fa-star-o pr-0 mt-1" />
 								</div>
-							</Row>
+							</Row> */}
 
 							{/* happy hour time */}
 							<Row>
