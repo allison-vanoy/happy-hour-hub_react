@@ -19,16 +19,6 @@ function RenderIcon({dealType}) {
 	}
 }
 
-function MapContainer(props) {
-	return (
-		<Row className="mapArea fixed-top">
-			<Col className="p-0">
-				<Map businesses={props.businesses} />
-			</Col>
-		</Row>
-	);
-}
-
 function BusinessList({dayOfWeek, dealType, businesses, happyhours, isLoading, errMess}) {
 	if (isLoading) {
 		return (
@@ -125,7 +115,19 @@ function BusinessList({dayOfWeek, dealType, businesses, happyhours, isLoading, e
 function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
-			<MapContainer businesses={props.businesses} />
+
+			<Row className="mapArea fixed-top">
+				<Col className="p-0">
+					<Map 
+						dayOfWeek={props.dayOfWeek}
+						dealType={props.dealType}
+					
+						businesses={props.businesses} 
+						happyhours={props.happyhours}
+					/>
+				</Col>
+			</Row>
+
 			<BusinessList 
 				dayOfWeek={props.dayOfWeek}
 				dealType={props.dealType}
@@ -135,6 +137,7 @@ function Home(props) {
 				errMess={props.businessesErrMess}
 				happyhours={props.happyhours}
 			/>
+
 		</Container>
 	);
 }
