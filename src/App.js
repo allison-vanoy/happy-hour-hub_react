@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Main from './components/MainComponent';
+import ScrollToTop from './components/ScrollToTopComponent';
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { createForms } from 'react-redux-form';
@@ -29,6 +30,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
+				<ScrollToTop />
 				<div className="App">
 					<Main />
 				</div>

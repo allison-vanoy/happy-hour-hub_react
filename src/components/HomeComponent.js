@@ -89,7 +89,7 @@ function BusinessList({dayOfWeek, dealType, businesses, happyhours, isLoading, e
 		return (
 			<div key={business.id} className="businessContainer border bg-white p-2">
 				<Row className="pb-0">
-					<h3 className="col-9">{business.name}</h3>
+					<h3 className="col">{business.name}</h3>
 				</Row>
 
 				{happyhourDetails(business.id)}
