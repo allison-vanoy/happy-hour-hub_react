@@ -116,7 +116,7 @@ function Home(props) {
 	return (
 		<Container fluid id="mainContainer" className="p-0">
 
-			<Row className="mapArea fixed-top">
+			<Row className="mapArea fixed-top pl-3">
 				<Col className="p-0">
 					<Map 
 						dayOfWeek={props.dayOfWeek}

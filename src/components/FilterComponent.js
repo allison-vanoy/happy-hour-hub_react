@@ -37,7 +37,7 @@ class Filter extends Component {
 		return (
 			<React.Fragment>
 				{/* filter icon */}
-				<a type="button" onClick={this.toggleFilter} id="filterBtn" className="col-2 text-center mt-2 ml-0 d-lg-none">
+				<a type="button" onClick={this.toggleFilter} id="filterBtn" className="col-2 text-center pt-4 ml-0 d-lg-none">
 					<i className="fa fa-filter" />
 				</a>
 

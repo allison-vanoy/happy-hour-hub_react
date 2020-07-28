@@ -207,7 +207,12 @@ class AddNewHappyHour extends Component {
 
 										{suggestions.map((suggestion) => {
 											const style = {
-												backgroundColor: suggestion.active ? '#41b6e6' : '#fff'
+												backgroundColor: suggestion.active ? '#41b6e6' : '#fff',
+												border: '1px solid #ced4da',
+												borderCollapse: 'collapse',
+												padding: '10px',
+												fontSize: '14px',
+												cursor: 'pointer',
 											}
 
 											return (
